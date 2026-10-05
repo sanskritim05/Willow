@@ -1,4 +1,4 @@
-# Willow 🌿
+# Willow 
 
 **An Early-Warning Check-In for Older Adults and Caregivers**
 
