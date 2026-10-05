@@ -69,11 +69,11 @@ The planned application version focuses on approximately **30 features that a pe
 
 Willow compares several approaches:
 
-1. **Logistic Regression — Status Only**
+1. **Logistic Regression: Status Only**
 
    Serves as the baseline model using a person's current status.
 
-2. **Logistic Regression — Status + Change Features**
+2. **Logistic Regression: Status + Change Features**
 
    Adds information describing how the person's functioning has changed over time.
 
@@ -250,13 +250,6 @@ The project considers several limitations and implementation challenges:
 - Longitudinal participant dropout may introduce bias.
 - Translating machine-learning explanations into language that caregivers can easily understand is an important design challenge.
 
-## Team
-
-**Sanskriti Malakar** — Health Tech  
-**Sydney Patel** — Computer Science  
-**Aarushi Singh** — Computer Science
-
-Cornell Tech — INFO 5600
 
 ## References
 
@@ -267,6 +260,4 @@ Cornell Tech — INFO 5600
 - Guralnik, J. M., Ferrucci, L., Simonsick, E. M., Salive, M. E., & Wallace, R. B. (1995). *Lower-extremity function in persons over the age of 70 years as a predictor of subsequent disability.*
 - Kaye, J. A., et al. (2011). *Intelligent Systems for Assessing Aging Changes: home-based, unobtrusive, and continuous assessment of aging.*
 
----
-
-> **Note:** Willow is a research prototype intended to explore early functional-change detection. It is not a diagnostic tool and does not provide medical advice or treatment recommendations.
+-
