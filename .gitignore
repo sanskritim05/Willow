@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.DS_Store
+# row-level NHATS data: never commit, never upload
+data/
+*.parquet
+*.dta
+# real usability responses (template is committed)
+usability/results.csv

@@ -1,0 +1,140 @@
+# NHATS -> canonical variable map.
+#
+# Checked on 2026-09-23 against the header metadata (variable names/labels) of the Round 1-14
+# public-use SP files and the Round 5 SP frequency codebook (codes and skip patterns).
+# All names below exist in every round 1-14 except where noted. `{r}` = round number.
+#
+# Design choices (documented for the paper's methods section):
+#  * help / difficulty / device use come from NHATS's DERIVED measures (mo{r}d*, sc{r}d*):
+#    consistent across rounds and standard in NHATS disability research (Freedman et al.).
+#  * difficulty is BINARY in the derived measures: did it by self with difficulty (1) vs without (0).
+#  * "doing less" = "compared with a year ago, less often" (*yrgo items).
+#  * "went without" = *wout items (stayed in / went without because no help or too difficult).
+#  * community = r{r}dresid == 1 only; residential care (2,3,7) is NOT community.
+#  * dementia = official NHATS classification (Technical Paper #5 + July 2026 addendum), ported to
+#    Python in src/willow/dementia.py. Validated: 68/70 published unweighted counts match exactly
+#    for R1-14; R12 differs by 5 of 6,327 (possible vs none), attributable to the R12 V4 re-release
+#    (machine-scored clock, dclkdlnn). The hc{r}disescn9 item below is only a fallback.
+
+verified: true   # names and codes checked; keep reviewing skip patterns listed under OPEN QUESTIONS
+
+files:
+  sp_file: "NHATS_Round_{r}_SP_File*"          # e.g. NHATS_Round_12_SP_File_V3.dta
+  tracker_file: "NHATS_Round_{r}_Tracker_File*"
+  covid_file: "NHATS_R10_CV_SP_File*"
+  # imputed income (Rounds 1, 3, 5, 7, 9, 11-14); NHATS changed the file-name style from Round 12 on
+  income_file: ["NHATS_Round_{r}_Int_Inc_Imp_File*", "NHATS_R{r}_Int_Inc_Imp_File*"]
+
+# imputed-income file contents (names checked against R1 and R14 file headers): 20 multiply imputed
+# total-income draws, an "imputed" flag and the reason. Used ONLY as a fairness-audit variable
+# (never a predictor): income = mean of the 20 draws, carried forward to rounds without an income
+# file; low_income = bottom quartile within round.
+income:
+  check_vars: ["ia{r}toincimif", "ia{r}dtoincimi1", "ia{r}dtoincimi20"]
+  draw: "ia{r}dtoincimi{k}"
+  n_draws: 20
+
+# Self-reported memory (the app asks "more trouble remembering than a year ago?").
+# Codes checked against R5 value labels. Self-respondents answer cg*, proxies answer cp*.
+#   cg{r}memcom1yr  memory compared to 1 year ago: 1 much better .. 3 same .. 5 much worse
+#   cg{r}ratememry  rate your memory: 1 excellent .. 5 poor
+#   cp{r}chgthink8  (proxy) daily problems with thinking/memory: 1 yes, 2 no, 3 dementia reported
+#   cp{r}memrygood  (proxy) how good is SP's memory: 1 excellent .. 5 poor
+# Derived in nhats_extra.py: memory_worse (memcom1yr 4-5, else proxy chgthink8 1/3) and
+# memory_poor (ratememry, else memrygood, 4-5).
+
+id: spid
+
+items:
+  # --- help from another person, last month (derived). 1 no, 2 yes, 3 DKRF, 8 not done
+  go_outside_help:        {nhats: "mo{r}douthelp",  recode: help_d}
+  get_around_inside_help: {nhats: "mo{r}dinsdhelp", recode: help_d}
+  get_out_of_bed_help:    {nhats: "mo{r}dbedhelp",  recode: help_d}
+  eating_help:            {nhats: "sc{r}deathelp",  recode: help_d}
+  bathing_help:           {nhats: "sc{r}dbathhelp", recode: help_d}
+  toileting_help:         {nhats: "sc{r}dtoilhelp", recode: help_d}
+  dressing_help:          {nhats: "sc{r}ddreshelp", recode: help_d}
+
+  # --- difficulty doing it by self (derived). 1 did not do by self, 2 by self/no difficulty,
+  #     3 by self/difficulty, 4-7 DKRF combos, 8 not done in last month
+  go_outside_diff:        {nhats: "mo{r}doutsfdf",  recode: sfdf}
+  get_around_inside_diff: {nhats: "mo{r}dinsdsfdf", recode: sfdf}
+  get_out_of_bed_diff:    {nhats: "mo{r}dbedsfdf",  recode: sfdf}
+  eating_diff:            {nhats: "sc{r}deatsfdf",  recode: sfdf}
+  bathing_diff:           {nhats: "sc{r}dbathsfdf", recode: sfdf}
+  toileting_diff:         {nhats: "sc{r}dtoilsfdf", recode: sfdf}
+  dressing_diff:          {nhats: "sc{r}ddressfdf", recode: sfdf}
+
+  # --- device use (derived). 1 no, 2 yes, 3-4 DKRF, 8 not done, 9 (bathing) no bars/seats or washes other way
+  go_outside_device:        {nhats: "mo{r}doutdevi",  recode: devi}
+  get_around_inside_device: {nhats: "mo{r}dinsddevi", recode: devi}
+  get_out_of_bed_device:    {nhats: "mo{r}dbeddevi",  recode: devi}
+  eating_device:            {nhats: "sc{r}deatdevi",  recode: devi}
+  bathing_device:           {nhats: "sc{r}dbathdevi", recode: devi}
+  toileting_device:         {nhats: "sc{r}dtoildevi", recode: devi}
+  dressing_device:          {nhats: "sc{r}ddresdevi", recode: devi}
+
+  # --- doing it less often than a year ago. 1 more often, 2 less often, 3 about the same
+  go_outside_less:        {nhats: "mo{r}outyrgo",   recode: yrgo_less}
+  get_around_inside_less: {nhats: "mo{r}insdyrgo",  recode: yrgo_less}
+  bathing_less:           {nhats: "sc{r}bathyrgo",  recode: yrgo_less}
+  dressing_less:          {nhats: "sc{r}dresyrgo",  recode: yrgo_less}
+
+  # --- went without / stayed in. 1 yes, 2 no, -1 inapplicable (not asked: no difficulty) -> 0
+  go_outside_wout:        {nhats: "mo{r}outwout",   recode: yes_no}
+  get_around_inside_wout: {nhats: "mo{r}insdwout",  recode: yes_no}
+  get_out_of_bed_wout:    {nhats: "mo{r}bedwout",   recode: yes_no}
+  eating_wout:            {nhats: "sc{r}eatwout",   recode: yes_no}
+  bathing_wout:           {nhats: "sc{r}bathwout",  recode: yes_no}
+  dressing_wout:          {nhats: "sc{r}dreswout",  recode: yes_no}
+
+  # --- how often goes outside. 1 every day .. 5 never -> 0..4
+  go_out_freq:       {nhats: "mo{r}outoft",    recode: out_freq}
+
+  # --- health context
+  fell_last_year:    {nhats: "hc{r}fllsinmth", recode: yes_no_strict}   # NB: fell in the LAST MONTH
+  self_rated_health: {nhats: "hc{r}health",    recode: identity}        # 1 excellent .. 5 poor
+  pain_limits:       {nhats: "ss{r}painlimts", recode: yes_no}          # -1 = no bothersome pain -> 0
+  hospital_stay:     {nhats: "hc{r}hosptstay", recode: yes_no_strict}   # last 12 months
+  dementia_class:    {nhats: "hc{r}disescn9",  recode: dementia_dx}     # fallback only; overridden by dementia.py
+  phq2:              {derived: phq2}
+
+  # --- demographics / design
+  age_cat:        {nhats: "r{r}d2intvrage", recode: identity}
+  female:         {nhats: "r{r}dgender",    recode: female}       # only in cohort-entry rounds; carried
+  race_eth:       {nhats: "rl{r}dracehisp", recode: race_eth}     # only in cohort-entry rounds; carried
+  lives_alone:    {nhats: "hh{r}dlvngarrg", recode: lives_alone}
+  proxy:          {nhats: "is{r}resptype",  recode: proxy}
+  residence:      {nhats: "r{r}dresid",     recode: residence}
+  weight:         {nhats: "w{r}anfinwgt0",  recode: identity}
+  stratum:        {nhats: "w{r}varstrat",   recode: identity}
+  psu:            {nhats: "w{r}varunit",    recode: identity}
+
+recodes:
+  help_d:        {1: 0, 2: 1, 8: 0}                 # "not done in last month" = no help received
+  sfdf:          {2: 0, 3: 1, 1: 1}                 # 1 "did not do by self" -> difficulty; 8 not done -> missing
+  devi:          {1: 0, 2: 1, 9: 0}
+  yrgo_less:     {1: 0, 2: 1, 3: 0}
+  yes_no:        {1: 1, 2: 0, -1: 0}
+  yes_no_strict: {1: 1, 2: 0}
+  dementia_dx:   {1: 2, 7: 2, 2: 0}                 # 7 = previously reported
+  out_freq:      {1: 0, 2: 1, 3: 2, 4: 3, 5: 4}
+  female:        {1: 0, 2: 1}
+  race_eth:      {1: white, 2: black, 3: other, 4: hispanic}   # 5, 6 (DKRF) -> missing
+  lives_alone:   {1: 1, _default: 0}
+  proxy:         {1: 0, 2: 1}
+  residence:     {1: community, 2: residential_care, 3: residential_care, 7: residential_care,
+                  4: nursing_home, 5: nursing_home, 8: nursing_home, 6: deceased}
+  identity:      null
+
+derived:
+  phq2:
+    items: ["hc{r}depresan1", "hc{r}depresan2"]   # 1 not at all .. 4 nearly every day
+    recode: {1: 0, 2: 1, 3: 2, 4: 3}
+
+age_cat_midpoints: {1: 67, 2: 72, 3: 77, 4: 82, 5: 87, 6: 92}
+
+# OPEN QUESTIONS (check in the NHATS user guide before submission)
+#  - sfdf code 1 ("did not do by self") for people with NO help: treated as difficulty. Rare in at-risk group.
+#  - *yrgo items are -1 (inapplicable) for people who never do the activity -> missing.
+#  - Round 10 (2020) was fielded during COVID-19: see covid_file and the pandemic sensitivity analysis.

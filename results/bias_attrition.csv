@@ -1,0 +1,16 @@
+measure (mean at t),died,lost to follow-up,moved to care,stayed (outcome observed)
+windows,1107.0,7560.0,506.0,35632.0
+share_of_at_risk_%,2.5,16.9,1.1,79.5
+age,82.777,77.812,84.174,78.293
+female,0.424,0.543,0.607,0.551
+lives_alone,0.419,0.307,0.577,0.331
+proxy,0.037,0.016,0.03,0.009
+low_income,0.292,0.212,0.265,0.202
+medicaid,0.163,0.154,0.127,0.112
+self_rated_health__cur,3.185,2.716,2.822,2.6
+dementia_class__cur,0.411,0.219,0.579,0.172
+fell_last_year__cur,0.156,0.092,0.131,0.09
+hospital_stay__cur,0.296,0.17,0.226,0.163
+go_out_freq__cur,0.733,0.566,0.642,0.458
+n_any_difficulty,0.893,0.546,0.964,0.474
+n_any_device,1.951,1.273,2.13,1.258
