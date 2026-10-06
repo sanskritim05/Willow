@@ -115,6 +115,26 @@ Steady → Watch → Talk to Someone
 
 Rather than displaying only a prediction score, Willow is designed to show the changes that contributed to the result.
 
+## Cleaning and Exploration Files
+
+These are the core files for the cleaning and exploratory analysis workflow:
+
+| File | Purpose |
+|---|---|
+| `config/variables.yaml` | Maps NHATS raw variable names to Willow's canonical variables and records recode rules for missing values, activity measures, residence status, demographics, and income. |
+| `notebooks/01_explore.ipynb` | Explores the cleaned NHATS panel with aggregate-only tables and plots: source-file coverage, sample composition, attrition, activity trends, outcome rates, fairness groups, and pandemic-round checks. |
+| `notebooks/02_clean.ipynb` | Reviews and validates the cleaning process: raw missing-code patterns, recode checks, dementia and income derivations, panel consistency checks, missingness, cohort flow, and cleaning takeaways. |
+| `src/willow/schema.py` | Defines the canonical Willow data schema, activity groups, feature groups, fairness groups, and readable labels used across notebooks. |
+| `src/willow/nhats.py` | Loads NHATS public-use files, applies recodes from `variables.yaml`, carries forward cohort-entry demographics, attaches income, and builds the long person-round panel. |
+| `src/willow/nhats_extra.py` | Derives additional NHATS measures such as household-task difficulty, physical capacity, performance tests, symptoms, chronic conditions, memory, and Medicaid. |
+| `src/willow/dementia.py` | Implements the NHATS dementia classification algorithm and checks it against published NHATS counts. |
+| `src/willow/data.py` | Defines project data paths and caches the cleaned panel locally at `data/clean/panel.parquet`. |
+| `src/willow/explore.py` | Provides aggregate-only helper functions for notebook tables, plots, suppression of small counts, data dictionaries, and cleaning logs. |
+| `src/willow/features.py` | Converts the cleaned panel into longitudinal prediction windows and creates current-status and change-based feature sets. |
+| `src/willow/interpret.py` | Provides data-quality and interpretation helpers, including missingness summaries, age checks, attrition summaries, and later error-analysis utilities. |
+
+The cleaned panel in `data/clean/` contains respondent-level data and should stay local. Notebook outputs and committed results should remain aggregate-only.
+
 ## Preventing Overfitting
 
 Several validation strategies are planned to make sure the model generalizes to new people and future data.
