@@ -1,0 +1,86 @@
+column,label,nhats_source,recode,dtype,% non-missing (community)
+person_id,NHATS sample person ID,spid,,float64,100.0
+round,NHATS round (1 = 2011 ... 14 = 2024),file,,int64,100.0
+go_outside_help,Help from a person: go outside,mo{r}douthelp,help_d,float64,100.0
+get_around_inside_help,Help from a person: get around inside,mo{r}dinsdhelp,help_d,float64,100.0
+get_out_of_bed_help,Help from a person: get out of bed,mo{r}dbedhelp,help_d,float64,100.0
+eating_help,Help from a person: eating,sc{r}deathelp,help_d,float64,100.0
+bathing_help,Help from a person: bathing,sc{r}dbathhelp,help_d,float64,99.9
+toileting_help,Help from a person: toileting,sc{r}dtoilhelp,help_d,float64,99.9
+dressing_help,Help from a person: dressing,sc{r}ddreshelp,help_d,float64,99.9
+go_outside_diff,Difficulty go outside alone,mo{r}doutsfdf,sfdf,float64,98.3
+get_around_inside_diff,Difficulty get around inside alone,mo{r}dinsdsfdf,sfdf,float64,99.6
+get_out_of_bed_diff,Difficulty get out of bed alone,mo{r}dbedsfdf,sfdf,float64,99.9
+eating_diff,Difficulty eating alone,sc{r}deatsfdf,sfdf,float64,99.9
+bathing_diff,Difficulty bathing alone,sc{r}dbathsfdf,sfdf,float64,99.9
+toileting_diff,Difficulty toileting alone,sc{r}dtoilsfdf,sfdf,float64,99.9
+dressing_diff,Difficulty dressing alone,sc{r}ddressfdf,sfdf,float64,99.4
+go_outside_device,Uses a device for go outside,mo{r}doutdevi,devi,float64,98.4
+get_around_inside_device,Uses a device for get around inside,mo{r}dinsddevi,devi,float64,99.4
+get_out_of_bed_device,Uses a device for get out of bed,mo{r}dbeddevi,devi,float64,99.9
+eating_device,Uses a device for eating,sc{r}deatdevi,devi,float64,99.9
+bathing_device,Uses a device for bathing,sc{r}dbathdevi,devi,float64,99.8
+toileting_device,Uses a device for toileting,sc{r}dtoildevi,devi,float64,99.8
+dressing_device,Uses a device for dressing,sc{r}ddresdevi,devi,float64,99.5
+go_outside_less,Does go outside less often than a year ago,mo{r}outyrgo,yrgo_less,float64,98.4
+get_around_inside_less,Does get around inside less often than a year ago,mo{r}insdyrgo,yrgo_less,float64,99.6
+bathing_less,Does bathing less often than a year ago,sc{r}bathyrgo,yrgo_less,float64,99.9
+dressing_less,Does dressing less often than a year ago,sc{r}dresyrgo,yrgo_less,float64,99.4
+go_outside_wout,Went without go outside (no help / too hard),mo{r}outwout,yes_no,float64,99.9
+get_around_inside_wout,Went without get around inside (no help / too hard),mo{r}insdwout,yes_no,float64,99.9
+get_out_of_bed_wout,Went without get out of bed (no help / too hard),mo{r}bedwout,yes_no,float64,100.0
+eating_wout,Went without eating (no help / too hard),sc{r}eatwout,yes_no,float64,100.0
+bathing_wout,Went without bathing (no help / too hard),sc{r}bathwout,yes_no,float64,100.0
+dressing_wout,Went without dressing (no help / too hard),sc{r}dreswout,yes_no,float64,99.9
+go_out_freq,"How often goes outside (0 = every day, 4 = never)",mo{r}outoft,out_freq,float64,100.0
+fell_last_year,Recent fall (NHATS: fell in the last month),hc{r}fllsinmth,yes_no_strict,float64,99.9
+self_rated_health,Self-rated health (1 excellent - 5 poor),hc{r}health,identity,float64,100.0
+pain_limits,Pain limits activities,ss{r}painlimts,yes_no,float64,100.0
+hospital_stay,Hospital stay in the last year,hc{r}hosptstay,yes_no_strict,float64,99.8
+dementia_class,"dementia: 0 none, 1 possible, 2 probable",NHATS Technical Paper #5 algorithm,dementia_dx,float64,100.0
+female,female,r{r}dgender,female,float64,100.0
+race_eth,race eth,rl{r}dracehisp,race_eth,object,98.7
+lives_alone,lives alone,hh{r}dlvngarrg,lives_alone,float64,100.0
+proxy,proxy,is{r}resptype,proxy,float64,100.0
+weight,weight,w{r}anfinwgt0,identity,float64,100.0
+stratum,stratum,w{r}varstrat,identity,float64,100.0
+psu,psu,w{r}varunit,identity,float64,100.0
+phq2,PHQ-2 depressive symptoms (0-6),hc{r}depresan1-2,,float64,99.2
+iadl_laundry_diff,Difficulty doing laundry by self,nhats_extra.py,,float64,100.0
+iadl_laundry_hhelp,Someone else does laundry because of health,nhats_extra.py,,float64,99.9
+iadl_shopping_diff,Difficulty doing shopping by self,nhats_extra.py,,float64,99.9
+iadl_shopping_hhelp,Someone else does shopping because of health,nhats_extra.py,,float64,99.9
+iadl_meals_diff,Difficulty doing meals by self,nhats_extra.py,,float64,99.9
+iadl_meals_hhelp,Someone else does meals because of health,nhats_extra.py,,float64,99.9
+iadl_banking_diff,Difficulty doing banking by self,nhats_extra.py,,float64,99.8
+iadl_banking_hhelp,Someone else does banking because of health,nhats_extra.py,,float64,99.8
+iadl_meds_diff,Difficulty doing meds by self,nhats_extra.py,,float64,100.0
+iadl_meds_hhelp,Someone else does meds because of health,nhats_extra.py,,float64,99.9
+capacity_limits,"Number of 10 physical tasks the person cannot do (walk 6 blocks, climb stairs, ...)",nhats_extra.py,,float64,98.7
+cannot_walk_6blocks,Cannot walk 6 blocks,nhats_extra.py,,float64,98.7
+cannot_climb_10stairs,Cannot climb 10 stairs,nhats_extra.py,,float64,99.2
+low_energy,Low energy in last month,nhats_extra.py,,float64,99.8
+balance_problem,Balance or coordination problems,nhats_extra.py,,float64,99.9
+lower_body_weak,Lower-body strength limits activity,nhats_extra.py,,float64,99.9
+breathing_problem,Breathing problems,nhats_extra.py,,float64,99.9
+poor_vision,Cannot see across the street,nhats_extra.py,,float64,99.0
+poor_hearing,Cannot hear well on the phone,nhats_extra.py,,float64,99.8
+weight_loss_10lb,Lost 10+ lb in last year,nhats_extra.py,,float64,98.7
+bmi,Body-mass index,nhats_extra.py,,float64,97.2
+n_chronic,Number of chronic conditions (of 9),nhats_extra.py,,float64,100.0
+stroke,Ever had a stroke,nhats_extra.py,,float64,99.9
+network_size,People in social network (0-5),nhats_extra.py,,float64,95.2
+medicaid,Covered by Medicaid,nhats_extra.py,,float64,97.3
+walk_time,Seconds to walk 3 m (best trial),nhats_extra.py,,float64,81.0
+chair_time,Seconds for 5 chair stands,nhats_extra.py,,float64,66.6
+grip_max,"Grip strength (kg, best trial)",nhats_extra.py,,float64,80.7
+balance_score,Balance stands completed (0-3),nhats_extra.py,,float64,89.3
+perf_unable,Physical tests not completed (0-4),nhats_extra.py,,float64,91.8
+memory_worse,Memory worse than a year ago (self or proxy report),nhats_extra.py,,float64,98.9
+memory_poor,Rates memory fair or poor,nhats_extra.py,,float64,99.9
+age,"age, midpoint of 5-year group",r{r}d2intvrage,,float64,100.0
+status,community / residential_care / nursing_home / deceased,r{r}dresid,,str,100.0
+cohort,"round the person entered (1, 5 or 12)",derived,,float64,100.0
+income,"total income, mean of 20 imputed draws (audit only)",ia{r}dtoincimi1-20,,float64,100.0
+low_income,lowest income quartile within round (audit only),derived,,float64,100.0
+source,data source tag,derived,,str,100.0

@@ -11,7 +11,6 @@ Feature sets
     status    status-now core items + demographics             (baseline, "one-time snapshot")
     snapshot  status + extra measures                          (best snapshot; Q2 comparison)
     change    snapshot + change since last year                (main model)
-The app's ~30-feature set lives in app_model.py.
 """
 from __future__ import annotations
 
@@ -161,9 +160,6 @@ FEATURE_SETS = {
 
 
 def make_X(w: pd.DataFrame, feature_set: str = "change") -> pd.DataFrame:
-    if feature_set == "app":
-        from .app_model import app_features
-        return app_features(w)
     return FEATURE_SETS[feature_set](w).astype(float)
 
 
