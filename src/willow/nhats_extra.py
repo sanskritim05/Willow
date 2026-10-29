@@ -27,7 +27,7 @@ def source_columns(r: int) -> list[str]:
     cols += [f"ss{r}{v}" for v in ("lowenergy", "prbbalcrd", "lwrbodstr", "probbreat", "seewellst", "hearphone")]
     cols += [f"hw{r}{v}" for v in ("lst10pnds", "currweigh", "howtallft", "howtallin")]
     cols += [f"hc{r}disescn{i}" for i in CHRONIC]
-    cols += [f"sn{r}dnumsn", f"ip{r}cmedicaid"]
+    cols += [f"sn{r}dnumsn", f"is{r}resptype", f"ip{r}cmedicaid"]
     cols += [f"wa{r}{v}" for v in ("wlkc1rslt", "wlkc1secs", "wlk1hndr", "wlkc2rslt", "wlkc2secs", "wlk2hndr")]
     cols += [f"ch{r}{v}" for v in ("2chstrslt", "chstndsec", "chstdhndr")]
     cols += [f"gr{r}{v}" for v in ("grp1reslt", "grp1rdng", "grp2rdng")]
@@ -84,8 +84,9 @@ def derive(raw: pd.DataFrame, r: int) -> pd.DataFrame:
     o["n_chronic"] = np.where(np.isnan(cc).all(axis=0), np.nan, np.nansum(cc, axis=0))
     o["stroke"] = cc[CHRONIC.index(8)]
     # --- social network, Medicaid
+    # proxies are not asked (-1), except R3, which codes them 0: treat every proxy interview as missing
     net = _num(raw, f"sn{r}dnumsn")
-    o["network_size"] = np.where(net >= 0, net, np.nan)
+    o["network_size"] = np.where((net >= 0) & (_num(raw, f"is{r}resptype") != 2), net, np.nan)
     o["medicaid"] = _map(_num(raw, f"ip{r}cmedicaid"), yn)
     # --- physical performance (1 completed, 2 attempted, 3 not attempted)
     t = []

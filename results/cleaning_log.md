@@ -1,6 +1,6 @@
 # Cleaning log: NHATS panel for Willow
 
-- Built: 2026-10-29 12:08
+- Built: 2026-10-29 12:19
 - Rounds: 1-14; 18,439 people; 89,087 person-rounds; 85 columns
 - Panel: `data/clean/panel.parquet` (respondent data: keep local, never share)
 

@@ -69,7 +69,7 @@ weight_loss_10lb,Lost 10+ lb in last year,nhats_extra.py,,float64,98.7
 bmi,Body-mass index,nhats_extra.py,,float64,97.2
 n_chronic,Number of chronic conditions (of 9),nhats_extra.py,,float64,100.0
 stroke,Ever had a stroke,nhats_extra.py,,float64,99.9
-network_size,People in social network (0-5),nhats_extra.py,,float64,95.2
+network_size,People in social network (0-5),nhats_extra.py,,float64,94.8
 medicaid,Covered by Medicaid,nhats_extra.py,,float64,97.3
 walk_time,Seconds to walk 3 m (best trial),nhats_extra.py,,float64,81.0
 chair_time,Seconds for 5 chair stands,nhats_extra.py,,float64,66.6

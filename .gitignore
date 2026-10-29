@@ -9,3 +9,5 @@ data/
 *.dta
 # real usability responses (template is committed)
 usability/results.csv
+# raw NHATS download (data files, codebooks, archives): keep local
+NHATS Data/

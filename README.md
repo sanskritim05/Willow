@@ -1,283 +1,90 @@
-# Willow 
+# Willow
 
-**An Early-Warning Check-In for Older Adults and Caregivers**
+**An Early-Warning Check-In for Older Adults and Caregivers** · INFO 5600
 
-Willow is a healthcare AI project designed to identify early changes in an older adult's everyday functioning before those changes develop into a larger loss of independence.
+Willow explores whether changes in a person's own everyday activities over time can predict whether they will begin
+needing help from another person with mobility or self-care within about a year. It uses the **National Health and
+Aging Trends Study (NHATS)**, Rounds 1–14 (2011–2024).
 
-Many older adults may still appear independent while quietly changing how they complete everyday activities. They may go out less often, use support while walking, skip certain activities, or change how they bathe or dress. These small changes can go unnoticed until a fall, hospitalization, or new need for assistance occurs.
+This repository covers the **data cleaning and exploration** stage: turning the NHATS public-use files into a clean
+person-round panel, checking it, and describing the sample and the outcome. Modelling comes later.
 
-Willow explores whether changes in a person's own behavior over time can help predict whether they will begin needing assistance with mobility or self-care within approximately one year.
+## Quick start
 
-## Project Goal
-
-Willow combines longitudinal health data with an explainable machine-learning pipeline to answer several questions:
-
-- Can changes from a person's previous behavior predict a new need for assistance one year later?
-- Do longitudinal changes provide more predictive value than a single snapshot of someone's current condition?
-- How does an interpretable logistic regression model compare with tree-based machine-learning models?
-- Does model performance remain consistent across demographic and economic groups?
-- Can older adults and caregivers understand and use the explanations produced by the system?
-
-The long-term product concept is a short weekly check-in that tracks functional changes and presents them through an understandable timeline.
-
-## Dataset
-
-The project uses data from the **National Health and Aging Trends Study (NHATS)**.
-
-For each person at year `t`, Willow compares information from the previous year (`t-1`) with their current status (`t`) and predicts whether they will newly require assistance at `t+1`.
-
-Only participants who:
-
-- are living at home, and
-- are not currently receiving assistance at year `t`
-
-are included in the prediction population.
-
-## Features
-
-The model uses both a person's **current status** and **changes from their own previous behavior**.
-
-### Current Status
-
-Features include difficulty with everyday activities such as:
-
-- Going outside
-- Moving around inside
-- Getting out of bed
-- Bathing
-- Dressing
-- Toileting
-- Eating
-
-Additional variables include device use, activity frequency, falls, pain, mood, memory, and age.
-
-### Changes Over Time
-
-Longitudinal features capture changes such as:
-
-- Increased difficulty with activities
-- New assistive-device use
-- Going outside less frequently
-- New falls
-- Number of functional areas that declined
-
-Additional measures available in NHATS include household activities, walking speed, chair stands, grip strength, and chronic conditions.
-
-The planned application version focuses on approximately **30 features that a person can answer from home**.
-
-## Machine Learning Models
-
-Willow compares several approaches:
-
-1. **Logistic Regression: Status Only**
-
-   Serves as the baseline model using a person's current status.
-
-2. **Logistic Regression: Status + Change Features**
-
-   Adds information describing how the person's functioning has changed over time.
-
-3. **Random Forest**
-
-   Captures more complex relationships between features.
-
-4. **XGBoost**
-
-   Provides another tree-based approach for evaluating whether nonlinear models improve prediction.
-
-The comparison helps determine whether additional model complexity provides enough benefit over a simpler and more interpretable model.
-
-## Prediction Pipeline
-
-```text
-NHATS Data
-    ↓
-Data Cleaning & Preprocessing
-    ↓
-Longitudinal Feature Engineering
-    ↓
-Model Training
-    ↓
-Model Validation
-    ↓
-Explainability Analysis
-    ↓
-Willow Check-In Interface
-    ↓
-Risk Level + Key Changes + Timeline
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install -e ".[dev]"
+pytest -q                     # fake test data only; no NHATS needed
+jupyter lab notebooks/        # 02_clean, then 01_explore (kernel: the project's .venv)
 ```
 
-The product concept translates the model output into three understandable levels:
+NHATS files are expected in `NHATS Data/data/raw/round_01 … round_14` inside the repo (git-ignored). Pass another folder
+to `load_panel(nhats_dir=...)` to change it. The first run builds the cleaned panel at `data/clean/panel.parquet`;
+later runs reuse it (`load_panel(refresh=True)` rebuilds it, as `02_clean` does).
 
-```text
-Steady → Watch → Talk to Someone
-```
+> **NHATS data rules.** Never upload NHATS files or row-level data, including `NHATS Data/` and `data/clean/`, to
+> public AI tools or share them outside the team. Report only aggregate results: everything in `results/` is aggregate,
+> and counts under 11 people are suppressed. **Clear notebook outputs before committing**
+> (*Kernel → Restart & Clear Output*); a test fails if a notebook is committed with outputs.
 
-Rather than displaying only a prediction score, Willow is designed to show the changes that contributed to the result.
+## Prediction setup the data is prepared for
 
-## Cleaning and Exploration Files
+For each person at round `t`, compare the previous round (`t-1`) with now (`t`) and ask whether they newly receive
+help at `t+1`. A window is **at risk** if the person lives in the community at `t-1` and `t` and gets no help with any
+of the 7 activities at `t`: going outside, moving inside, getting out of bed, eating, bathing, toileting, dressing.
 
-These are the core files for the cleaning and exploratory analysis workflow:
+## Files
 
 | File | Purpose |
 |---|---|
-| `config/variables.yaml` | Maps NHATS raw variable names to Willow's canonical variables and records recode rules for missing values, activity measures, residence status, demographics, and income. |
-| `notebooks/01_explore.ipynb` | Explores the cleaned NHATS panel with aggregate-only tables and plots: source-file coverage, sample composition, attrition, activity trends, outcome rates, fairness groups, and pandemic-round checks. |
-| `notebooks/02_clean.ipynb` | Reviews and validates the cleaning process: raw missing-code patterns, recode checks, dementia and income derivations, panel consistency checks, missingness, cohort flow, and cleaning takeaways. |
-| `src/willow/schema.py` | Defines the canonical Willow data schema, activity groups, feature groups, fairness groups, and readable labels used across notebooks. |
-| `src/willow/nhats.py` | Loads NHATS public-use files, applies recodes from `variables.yaml`, carries forward cohort-entry demographics, attaches income, and builds the long person-round panel. |
-| `src/willow/nhats_extra.py` | Derives additional NHATS measures such as household-task difficulty, physical capacity, performance tests, symptoms, chronic conditions, memory, and Medicaid. |
-| `src/willow/dementia.py` | Implements the NHATS dementia classification algorithm and checks it against published NHATS counts. |
-| `src/willow/data.py` | Defines project data paths and caches the cleaned panel locally at `data/clean/panel.parquet`. |
-| `src/willow/explore.py` | Provides aggregate-only helper functions for notebook tables, plots, suppression of small counts, data dictionaries, and cleaning logs. |
-| `src/willow/features.py` | Converts the cleaned panel into longitudinal prediction windows and creates current-status and change-based feature sets. |
-| `src/willow/interpret.py` | Provides data-quality and interpretation helpers, including missingness summaries, age checks, attrition summaries, and later error-analysis utilities. |
+| `notebooks/02_clean.ipynb` | Reviews the cleaning: NHATS missing-data codes, recode checks against the codebook, dementia and income derivations, consistency checks, missingness by round, cohort flow. Rebuilds the panel and writes the `results/` files. |
+| `notebooks/01_explore.ipynb` | Aggregate-only tour: source-file coverage, sample and cohorts, how people leave the study, activity trends (survey-weighted), outcome rate, changes before new help, fairness group sizes, pandemic rounds. |
+| `config/variables.yaml` | Maps NHATS variable names to Willow's variables and records every recode rule. |
+| `src/willow/nhats.py` | Loads the NHATS files, applies the recodes, carries cohort-entry demographics forward, attaches income, builds the long panel. |
+| `src/willow/nhats_extra.py` | Extra measures: household tasks, physical capacity and performance tests, symptoms, chronic conditions, memory, social network, Medicaid. |
+| `src/willow/dementia.py` | The official NHATS dementia classification (Technical Paper #5), checked against published counts. |
+| `src/willow/features.py` | Builds the at-risk `t-1 → t → t+1` windows and their outcomes, plus status and change features. |
+| `src/willow/interpret.py` | Data-quality helpers: missingness by round, age check, who leaves the study (attrition). |
+| `src/willow/explore.py` | Aggregate-only notebook helpers: small-count suppression, tables, plots, data dictionary, cleaning log. |
+| `src/willow/schema.py`, `data.py` | Variable groups and labels; data paths and the local panel cache. |
+| `tests/` | Tests on a small fake panel (`fake_panel.py`), never on NHATS. |
 
-The cleaned panel in `data/clean/` contains respondent-level data and should stay local. Notebook outputs and committed results should remain aggregate-only.
+## Outputs (`results/`, aggregate only)
 
-## Preventing Overfitting
-
-Several validation strategies are planned to make sure the model generalizes to new people and future data.
-
-**People-based split:**  
-30% of participants are held out entirely so the final model is evaluated on people it has never seen.
-
-**Time-based split:**  
-Models are trained using earlier years and evaluated using later years to better represent real-world deployment.
-
-**Cross-validation:**  
-5-fold cross-validation is performed on the training data and grouped by person.
-
-The final test set is used only once, and experiments are repeated across **10 different splits**.
-
-## Model Evaluation
-
-Performance will be evaluated using:
-
-| Metric | Purpose |
+| File | What it shows |
 |---|---|
-| **AUROC** | Measures how well the model ranks people who will need help above those who will not |
-| **AUPRC** | Evaluates performance when positive cases are relatively uncommon |
-| **Calibration** | Tests whether predicted probabilities correspond to actual outcomes |
-| **Sensitivity** | Measures how many people who eventually need help are correctly identified |
-| **Precision** | Measures how many flagged individuals actually develop the outcome |
+| `cleaning_log.md` | Files used per round, dementia check, valid codes set to missing, consistency checks, cohort flow |
+| `data_dictionary.csv` | Every panel column: label, NHATS source, recode, % non-missing |
+| `quality_missing_by_round.csv` | % missing per variable and round among community residents |
+| `quality_age_check.csv` | Whether age groups move forward consistently between interviews |
+| `bias_attrition.csv` | Characteristics of people who die, move to care, or are lost before follow-up vs those who stay |
 
-Approximately **9% of participants newly need assistance each year**, making AUPRC particularly important.
+## Main cleaning decisions
 
-### Validation Targets
+- **Help, difficulty and device use** come from NHATS's derived measures, so they're coded the same way in every round.
+- **Missing-data codes**: negative codes become missing; `-1` (skipped) becomes "no" only where the skip means no.
+  Don't-know/refused variants stay missing (listed in `cleaning_log.md`).
+- **Living in the community** means `dresid == 1` only.
+- **Dementia** uses the official NHATS classification: 68 of 70 published counts match exactly.
+- **Income** is the mean of NHATS's 20 imputed values, carried forward to rounds without an income file; "low income"
+  is the bottom quartile within the round. Used only for fairness checks, never as a predictor.
+- **Sex and race/ethnicity** are only asked at study entry and are copied to the person's other rounds.
+- **Social network size** is missing for proxy interviews in every round (Round 3 codes them 0 instead of not asked).
 
-| Goal | Target |
-|---|---|
-| Overall performance | AUROC ≥ 0.75 |
-| Calibration | Observed/expected ratio between 0.9 and 1.1 |
-| Usability | Check-in completed in under 3 minutes |
-| SUS | ≥ 68 |
-| Explanation understanding | ≥ 80% correctly explain why they received their result |
+## What we've learned so far
 
-## Explainability
-
-Healthcare predictions should not simply produce a risk score without explaining where it came from.
-
-Willow uses several approaches to make model behavior understandable.
-
-### SHAP
-
-For tree-based models, SHAP values are used to determine:
-
-- which features matter most overall
-- which features contributed most to an individual prediction
-
-### Logistic Regression Coefficients
-
-The coefficients from logistic regression provide an interpretable baseline for understanding the relationship between individual features and the predicted outcome.
-
-### Functional Timeline
-
-The application will visualize changes in activities over time so users can see trends themselves rather than relying entirely on the model's interpretation.
-
-## Fairness & Error Analysis
-
-Model performance will be compared across:
-
-- Gender
-- Race/ethnicity
-- Economic status
-
-The analysis will examine both accuracy and calibration across these groups.
-
-Willow will also examine **false negatives**—people who eventually needed help but were not flagged—and **false positives**—people who were flagged but did not ultimately need assistance.
-
-Because longitudinal studies can experience participant dropout, the project will also compare participants who leave NHATS with those who remain. This helps identify whether attrition could make the dataset appear healthier than the underlying population.
-
-## Product Concept
-
-Willow is designed as a lightweight weekly check-in rather than a wearable or continuous monitoring system.
-
-A typical interaction would look like:
-
-```text
-Complete ~2 minute check-in
-            ↓
-Compare answers with personal history
-            ↓
-Identify meaningful changes
-            ↓
-Estimate future assistance risk
-            ↓
-Show risk level
-            ↓
-Explain which changes contributed
-            ↓
-Display longitudinal timeline
-```
-
-The goal is to make subtle functional changes easier for older adults, caregivers, and healthcare professionals to recognize.
-
-## Usability Testing
-
-The prototype will be evaluated with approximately **8–10 participants**, including older adults, caregivers, friends, or family members.
-
-Testing will measure:
-
-- Time required to complete the check-in
-- System Usability Scale (SUS)
-- Whether users understand the explanation
-- Feedback gathered through short interviews
-
-## Why Willow?
-
-Existing systems often focus on a single signal, require additional hardware, or respond after an event has already happened.
-
-Willow instead explores whether a short self-reported check-in can identify gradual changes before a major loss of independence.
-
-The system is intended to provide:
-
-**For older adults and caregivers:**  
-A clear timeline showing how everyday functioning has changed.
-
-**For clinicians:**  
-A short and explainable summary of the changes contributing to a person's risk estimate.
-
-Willow is intended to **support professional review, not replace it**. It does not diagnose conditions or recommend medical treatment.
-
-## Potential Challenges
-
-The project considers several limitations and implementation challenges:
-
-- NHATS coding and missingness vary across survey waves.
-- Only around 9% of participants newly require assistance each year, creating class imbalance.
-- Some demographic subgroups may be too small for reliable fairness comparisons.
-- Longitudinal participant dropout may introduce bias.
-- Translating machine-learning explanations into language that caregivers can easily understand is an important design challenge.
-
+- 18,439 people, 89,087 person-rounds; 44,805 at-risk windows, of which 79.5% have an observed outcome.
+- About 9% of observed windows newly need help a year later.
+- People who leave before follow-up are older and sicker (more dementia, more difficulty), so the observed sample
+  looks healthier than everyone at risk.
+- Missing data is low (mostly under 2%), except physical performance tests, which are absent in Round 10 (2020, phone
+  interviews during COVID-19).
+- New difficulty and device use, especially for going outside and bathing, tend to come before needing help.
 
 ## References
 
-- CDC. *Older Adult Fall Prevention: Facts About Falls.*
 - National Health and Aging Trends Study (NHATS). *User Guide, Rounds 1–14 Final Release.* Johns Hopkins Bloomberg School of Public Health, 2026.
+- Kasper, J. D., Freedman, V. A., & Spillman, B. C. *Classification of Persons by Dementia Status in NHATS.* NHATS Technical Paper #5.
 - Freedman, V. A., & Kasper, J. D. (2019). *Cohort Profile: The National Health and Aging Trends Study (NHATS).* International Journal of Epidemiology.
 - Fried, L. P., Bandeen-Roche, K., Chaves, P. H., & Johnson, B. A. (2000). *Preclinical mobility disability predicts incident mobility disability in older women.*
 - Guralnik, J. M., Ferrucci, L., Simonsick, E. M., Salive, M. E., & Wallace, R. B. (1995). *Lower-extremity function in persons over the age of 70 years as a predictor of subsequent disability.*
-- Kaye, J. A., et al. (2011). *Intelligent Systems for Assessing Aging Changes: home-based, unobtrusive, and continuous assessment of aging.*
-
--

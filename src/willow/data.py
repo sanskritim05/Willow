@@ -11,14 +11,14 @@ import time
 import pandas as pd
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-DEFAULT_NHATS = os.path.expanduser("~/Downloads/NHATS Data/data/raw")
+DEFAULT_NHATS = os.path.join(ROOT, "NHATS Data", "data", "raw")
 PANEL_CACHE = os.path.join(ROOT, "data", "clean", "panel.parquet")
 
 
 def load_panel(nhats_dir: str | None = None, refresh: bool = False, log=print) -> pd.DataFrame:
     """The cleaned panel: read from the cache, or built from the NHATS files (and cached) if missing or refresh=True."""
     if os.path.exists(PANEL_CACHE) and not refresh:
-        log(f"[data] cached panel {os.path.relpath(PANEL_CACHE, ROOT)} (use --refresh to rebuild)")
+        log(f"[data] cached panel {os.path.relpath(PANEL_CACHE, ROOT)} (refresh=True to rebuild)")
         return pd.read_parquet(PANEL_CACHE)
     from .nhats import load_panel as _load
     t0 = time.time()
