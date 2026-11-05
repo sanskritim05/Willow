@@ -1,0 +1,66 @@
+feature,label,coef,odds_ratio_per_sd
+age,Age (5-year group),0.16861484713543676,1.1836641594770076
+cur_dementia_class,"Dementia classification (0 none, 1 possible, 2 probable)",0.16513569290692445,1.1795531648503925
+lives_alone,Lives alone,-0.13536354457362726,0.8733983347396344
+cur_go_out_freq,"How often goes outside (0 = every day, 4 = never)",0.1344976052747694,1.1439619195246435
+cur_go_outside_device,Uses a device for go outside,0.12478701125030696,1.1329071308949572
+cur_self_rated_health,Self-rated health (1 excellent - 5 poor),0.11359466305533106,1.1202979346983708
+cur_get_around_inside_device,Uses a device for get around inside,0.0999093103227797,1.1050706950264808
+cur_toileting_device,Uses a device for toileting,0.09694232482470776,1.1017968254634076
+cur_dressing_diff,Difficulty dressing alone,0.09291071040568429,1.0973637477296618
+cur_bathing_device,Uses a device for bathing,0.0863995092431021,1.0902418029887662
+cur_hospital_stay,Hospital stay in the last year,0.08376373297091931,1.0873719533158224
+proxy,Interview answered by a proxy,0.07746218018844288,1.0805413658149456
+cur_go_outside_diff,Difficulty go outside alone,0.0695121712049966,1.0719851084758787
+female,Female,0.06819270008757806,1.070571587841846
+cur_phq2,"Depressive symptoms (PHQ-2, 0-6)",0.06471168535089956,1.0668513911542574
+cur_fell_last_year,Recent fall (NHATS: fell in the last month),0.06234565573147726,1.064330172977874
+cur_get_out_of_bed_device,Uses a device for get out of bed,0.05831241764076854,1.0600461210911463
+cur_dressing_device,Uses a device for dressing,0.0500938677477624,1.0513697814577292
+cur_get_around_inside_diff,Difficulty get around inside alone,0.048541785857924354,1.0497392351584232
+cur_pain_limits,Pain limits activities,0.04569725391233641,1.0467574612555892
+cur_phq2 (missing),"Depressive symptoms (PHQ-2, 0-6) (missing)",0.042264326703359764,1.0431701800462856
+cur_fell_last_year (missing),Recent fall (NHATS: fell in the last month) (missing),0.03236908167639534,1.0328986589309668
+cur_go_outside_diff (missing),Difficulty go outside alone (missing),0.02770192513359519,1.0280891911964127
+cur_get_out_of_bed_wout,Went without get out of bed (no help / too hard),0.026495712524449384,1.026849844658641
+cur_get_around_inside_less,Does get around inside less often than a year ago,0.026010902568256656,1.0263521382866863
+cur_toileting_device (missing),Uses a device for toileting (missing),0.025378492316080324,1.0257032678698685
+cur_bathing_less,Does bathing less often than a year ago,0.025126371080748496,1.025444698891624
+cur_eating_diff,Difficulty eating alone,0.02507390972624354,1.0253909040848368
+cur_get_around_inside_device (missing),Uses a device for get around inside (missing),0.02455079112040679,1.0248546433008803
+cur_get_out_of_bed_device (missing),Uses a device for get out of bed (missing),-0.024465972630034832,0.9758308933123052
+cur_bathing_less (missing),Does bathing less often than a year ago (missing),-0.02297413822673841,0.9772877578408642
+cur_toileting_diff (missing),Difficulty toileting alone (missing),-0.022481657880935115,0.9777691713874198
+cur_bathing_diff,Difficulty bathing alone,0.02118568260012005,1.0214116924093275
+cur_eating_wout,Went without eating (no help / too hard),-0.021165570859991295,0.9790568478646475
+cur_go_outside_less,Does go outside less often than a year ago,0.021159326077992383,1.0213847719042222
+cur_dressing_less,Does dressing less often than a year ago,0.02049537099709454,1.0207068433773143
+cur_go_outside_wout (missing),Went without go outside (no help / too hard) (missing),-0.0191288527127331,0.9810529427652245
+covid_outcome,Outcome measured in 2020-21 (pandemic),-0.019059600926293725,0.9811208847866286
+cur_go_outside_less (missing),Does go outside less often than a year ago (missing),0.01850176235856494,1.0186739804368075
+cur_get_around_inside_diff (missing),Difficulty get around inside alone (missing),-0.016584016695042364,0.9835527410685172
+cur_go_outside_wout,Went without go outside (no help / too hard),-0.01608304059798202,0.9840456009271868
+cur_bathing_wout (missing),Went without bathing (no help / too hard) (missing),-0.015536141025622431,0.9845839222359455
+cur_bathing_diff (missing),Difficulty bathing alone (missing),0.0148087779239108,1.0149189711461075
+cur_go_out_freq (missing),"How often goes outside (0 = every day, 4 = never) (missing)",0.01465556933516176,1.0147634887537667
+cur_go_outside_device (missing),Uses a device for go outside (missing),0.012890324619524619,1.0129737629843463
+cur_eating_device (missing),Uses a device for eating (missing),0.012490339757640462,1.0125686698346315
+cur_pain_limits (missing),Pain limits activities (missing),-0.010658491289192109,0.9893981091588105
+cur_bathing_wout,Went without bathing (no help / too hard),0.01035638165482018,1.0104101945839525
+cur_toileting_diff,Difficulty toileting alone,0.008961819274009662,1.0090020966058388
+cur_dressing_device (missing),Uses a device for dressing (missing),0.008641079471668308,1.0086785213673144
+cur_eating_device,Uses a device for eating,0.007393536386584904,1.0074209360619413
+cur_hospital_stay (missing),Hospital stay in the last year (missing),0.00735328469484194,1.0073803864810678
+cur_dressing_diff (missing),Difficulty dressing alone (missing),0.006610445718603291,1.006632342938439
+cur_self_rated_health (missing),Self-rated health (1 excellent - 5 poor) (missing),0.006352196465581017,1.0063724144524204
+cur_get_around_inside_less (missing),Does get around inside less often than a year ago (missing),-0.005992196251874656,0.994025721150026
+covid_change,Change measured across 2020 (pandemic),-0.005394488541605999,0.9946200355832288
+cur_dressing_wout,Went without dressing (no help / too hard),0.004198338411302414,1.0042071637803167
+cur_bathing_device (missing),Uses a device for bathing (missing),0.003709243490839372,1.0037161312479663
+cur_eating_diff (missing),Difficulty eating alone (missing),0.0034594047861598283,1.0034653954329291
+cur_get_out_of_bed_diff (missing),Difficulty get out of bed alone (missing),-0.0033884783477457223,0.9966172560662032
+cur_get_out_of_bed_diff,Difficulty get out of bed alone,0.0031541196287413445,1.0031590990979617
+cur_get_around_inside_wout (missing),Went without get around inside (no help / too hard) (missing),-0.0015989390390431172,0.9984023385829449
+cur_dressing_wout (missing),Went without dressing (no help / too hard) (missing),-0.0015989390390431172,0.9984023385829449
+cur_dressing_less (missing),Does dressing less often than a year ago (missing),-0.0009148890493371252,0.999085529334048
+cur_get_around_inside_wout,Went without get around inside (no help / too hard),0.0006381275382637955,1.0006383311849565

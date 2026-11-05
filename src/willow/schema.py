@@ -110,6 +110,9 @@ ITEM_LABELS = {
     "memory_worse": "Memory worse than a year ago (self or proxy report)",
     "memory_poor": "Rates memory fair or poor",
     "medicaid": "Covered by Medicaid",
+    "age": "Age (5-year group)", "female": "Female", "lives_alone": "Lives alone",
+    "proxy": "Interview answered by a proxy",
+    "covid_change": "Change measured across 2020 (pandemic)", "covid_outcome": "Outcome measured in 2020-21 (pandemic)",
 }
 for a in ACTIVITIES:
     nice = a.replace("_", " ")

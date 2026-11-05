@@ -15,7 +15,7 @@ person-round panel, checking it, and describing the sample and the outcome. Mode
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 pytest -q                     # fake test data only; no NHATS needed
-jupyter lab notebooks/        # 02_clean, then 01_explore (kernel: the project's .venv)
+jupyter lab notebooks/        # 02_clean, 01_explore, then 03_model (kernel: the project's .venv)
 ```
 
 NHATS files are expected in `NHATS Data/data/raw/round_01 … round_14` inside the repo (git-ignored). Pass another folder
@@ -39,6 +39,8 @@ of the 7 activities at `t`: going outside, moving inside, getting out of bed, ea
 |---|---|
 | `notebooks/02_clean.ipynb` | Reviews the cleaning: NHATS missing-data codes, recode checks against the codebook, dementia and income derivations, consistency checks, missingness by round, cohort flow. Rebuilds the panel and writes the `results/` files. |
 | `notebooks/01_explore.ipynb` | Aggregate-only tour: source-file coverage, sample and cohorts, how people leave the study, activity trends (survey-weighted), outcome rate, changes before new help, fairness group sizes, pandemic rounds. |
+| `notebooks/03_model.ipynb` | Baseline model: logistic regression on status only. Person + time split, 5-fold person-grouped tuning, Platt recalibration, one test-set evaluation with bootstrap CIs, calibration plot, odds ratios. Writes `results/model_lr_status_*`. |
+| `src/willow/models.py`, `metrics.py` | Train/test split, grouped cross-validation, logistic regression, Platt scaling; AUROC, AUPRC, calibration, top-20% alert metrics, person-level bootstrap CIs. |
 | `config/variables.yaml` | Maps NHATS variable names to Willow's variables and records every recode rule. |
 | `src/willow/nhats.py` | Loads the NHATS files, applies the recodes, carries cohort-entry demographics forward, attaches income, builds the long panel. |
 | `src/willow/nhats_extra.py` | Extra measures: household tasks, physical capacity and performance tests, symptoms, chronic conditions, memory, social network, Medicaid. |

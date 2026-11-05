@@ -46,6 +46,40 @@ def test_no_future_information_in_features(windows, fs):
     pd.testing.assert_frame_equal(X, make_X(w2, fs))
 
 
+def test_split_is_person_disjoint_and_time_ordered(windows):
+    from willow.models import person_time_split
+    tr, te = person_time_split(analytic_windows(windows), split_round=10)
+    assert set(tr.person_id).isdisjoint(te.person_id)
+    assert (tr["round"] + 1).max() <= 10 and te["round"].min() >= 10
+
+
+def test_cv_folds_grouped_by_person(windows):
+    from willow.models import grouped_folds, person_time_split
+    tr, _ = person_time_split(analytic_windows(windows), 10)
+    for a, b in grouped_folds(tr, "y_any"):
+        assert set(tr.person_id.values[a]).isdisjoint(tr.person_id.values[b])
+
+
+def test_baseline_logistic_end_to_end(windows):
+    from willow import metrics as mt, models as md
+    tr, te = md.person_time_split(analytic_windows(windows), 10)
+    X, y = make_X(tr, "status"), tr["y_any"].values
+    table, C, oof = md.tune_logistic(X, y, md.grouped_folds(tr, "y_any"), grid=(0.01, 1.0))
+    assert C in (0.01, 1.0) and len(oof) == len(y)
+    model, platt = md.logistic(C).fit(X, y), md.platt_fit(oof, y)
+    p = md.platt_apply(platt, model.predict_proba(make_X(te, "status"))[:, 1])
+    assert ((p > 0) & (p < 1)).all()
+    res = mt.bootstrap_ci(te["y_any"].values, p, te.person_id.values, mt.alert_threshold(oof), n=20)
+    assert res.loc["auroc", "ci_low"] <= res.loc["auroc", "estimate"] <= res.loc["auroc", "ci_high"]
+    assert not {"race_eth", "income", "low_income"} & set(md.coefficients(model, list(X.columns)).feature)
+
+
+def test_alert_threshold_flags_top_share():
+    from willow.metrics import alert_threshold
+    p = np.linspace(0, 1, 101)
+    assert np.isclose((p >= alert_threshold(p, 0.2)).mean(), 0.2, atol=0.01)
+
+
 def test_counterfactual_removes_change(windows):
     cf = counterfactual(windows.head(50), ["go_out_freq"])
     assert (make_X(cf)["d_go_out_freq"].fillna(0) == 0).all()
