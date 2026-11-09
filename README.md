@@ -6,8 +6,9 @@ Willow explores whether changes in a person's own everyday activities over time 
 needing help from another person with mobility or self-care within about a year. It uses the **National Health and
 Aging Trends Study (NHATS)**, Rounds 1–14 (2011–2024).
 
-This repository covers the **data cleaning and exploration** stage: turning the NHATS public-use files into a clean
-person-round panel, checking it, and describing the sample and the outcome. Modelling comes later.
+This repository covers **data cleaning, exploration and modelling**: turning the NHATS public-use files into a clean
+person-round panel, checking it, describing the sample and the outcome, and training and comparing the prediction
+models (logistic regression, random forest, XGBoost) with SHAP explanations.
 
 ## Quick start
 
@@ -15,7 +16,7 @@ person-round panel, checking it, and describing the sample and the outcome. Mode
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 pytest -q                     # fake test data only; no NHATS needed
-jupyter lab notebooks/        # 02_clean, 01_explore, then 03_model (kernel: the project's .venv)
+jupyter lab notebooks/        # 02_clean, 01_explore, 03_model, then 04_trees (kernel: the project's .venv)
 ```
 
 NHATS files are expected in `NHATS Data/data/raw/round_01 … round_14` inside the repo (git-ignored). Pass another folder
@@ -40,13 +41,14 @@ of the 7 activities at `t`: going outside, moving inside, getting out of bed, ea
 | `notebooks/02_clean.ipynb` | Reviews the cleaning: NHATS missing-data codes, recode checks against the codebook, dementia and income derivations, consistency checks, missingness by round, cohort flow. Rebuilds the panel and writes the `results/` files. |
 | `notebooks/01_explore.ipynb` | Aggregate-only tour: source-file coverage, sample and cohorts, how people leave the study, activity trends (survey-weighted), outcome rate, changes before new help, fairness group sizes, pandemic rounds. |
 | `notebooks/03_model.ipynb` | Baseline model: logistic regression on status only. Person + time split, 5-fold person-grouped tuning, Platt recalibration, one test-set evaluation with bootstrap CIs, calibration plot, odds ratios. Writes `results/model_lr_status_*`. |
-| `src/willow/models.py`, `metrics.py` | Train/test split, grouped cross-validation, logistic regression, Platt scaling; AUROC, AUPRC, calibration, top-20% alert metrics, person-level bootstrap CIs. |
+| `notebooks/04_trees.ipynb` | Change-feature models: logistic regression, random forest and XGBoost on the same split as 03. Grouped-CV random search for the trees, Platt recalibration, one test-set evaluation with bootstrap CIs, midpoint comparison table, paired AUROC test, calibration plot, SHAP by change group, error analysis and alert levels. Writes `results/model_*_change_*` and `results/midpoint_*`. |
+| `src/willow/models.py`, `metrics.py` | Train/test split, grouped cross-validation, logistic regression, random forest, XGBoost (random-search tuning), Platt scaling; AUROC, AUPRC, calibration, top-20% alert metrics, person-level bootstrap CIs. |
 | `config/variables.yaml` | Maps NHATS variable names to Willow's variables and records every recode rule. |
 | `src/willow/nhats.py` | Loads the NHATS files, applies the recodes, carries cohort-entry demographics forward, attaches income, builds the long panel. |
 | `src/willow/nhats_extra.py` | Extra measures: household tasks, physical capacity and performance tests, symptoms, chronic conditions, memory, social network, Medicaid. |
 | `src/willow/dementia.py` | The official NHATS dementia classification (Technical Paper #5), checked against published counts. |
 | `src/willow/features.py` | Builds the at-risk `t-1 → t → t+1` windows and their outcomes, plus status and change features. |
-| `src/willow/interpret.py` | Data-quality helpers: missingness by round, age check, who leaves the study (attrition). |
+| `src/willow/interpret.py` | Data-quality helpers: missingness by round, age check, who leaves the study (attrition); error analysis and alert levels; SHAP explanations for the tree models, rolled up into the app's change groups. |
 | `src/willow/explore.py` | Aggregate-only notebook helpers: small-count suppression, tables, plots, data dictionary, cleaning log. |
 | `src/willow/schema.py`, `data.py` | Variable groups and labels; data paths and the local panel cache. |
 | `tests/` | Tests on a small fake panel (`fake_panel.py`), never on NHATS. |
@@ -60,6 +62,13 @@ of the 7 activities at `t`: going outside, moving inside, getting out of bed, ea
 | `quality_missing_by_round.csv` | % missing per variable and round among community residents |
 | `quality_age_check.csv` | Whether age groups move forward consistently between interviews |
 | `bias_attrition.csv` | Characteristics of people who die, move to care, or are lost before follow-up vs those who stay |
+| `model_lr_status_*` | Baseline (03): test metrics with CIs, tuning table, calibration by decile, odds ratios, calibration plot |
+| `model_{lr,rf,xgb}_change_*` | Change models (04): test metrics with CIs and chosen settings, tuning table, calibration by decile |
+| `model_{rf,xgb}_change_shap.csv` | Mean \|SHAP\| per feature and its direction |
+| `model_xgb_change_shap_groups.csv` | SHAP rolled up into the app's change groups |
+| `midpoint_model_table.csv` | All four models side by side (the midpoint presentation table) |
+| `midpoint_auroc_differences.csv` | Paired-bootstrap AUROC difference of each tree model vs logistic regression with change |
+| `fig_change_models_calibration.png`, `fig_xgb_change_shap_groups.png` | Calibration of the three change models; SHAP by change group |
 
 ## Cleaning
 
@@ -190,6 +199,47 @@ years.
 - Changes over the past year carry a clear signal, especially in daily activities and household tasks, and several
   changes together are a stronger warning than one.
 - Dropout, small groups and the 2020 round all need explicit checks.
+
+## Modelling results
+
+From `notebooks/03_model.ipynb` and `notebooks/04_trees.ipynb`. All models use the **same split**: 30% of people held
+out, trained on outcomes up to 2021 and tested on windows from 2021 on (outcomes 2022–2024). Train: 19,553 windows,
+4,333 people, 1,820 events. Test: 2,300 windows, 1,234 people, 215 events. Tuning is 5-fold cross-validation grouped by
+person; risks are recalibrated with Platt scaling; the alert flags the top 20% of training risks. 95% CIs come from a
+bootstrap that resamples people.
+
+| Model | Features | AUROC | AUPRC | Obs/exp | Cal. slope | Top 20%: sensitivity | Top 20%: precision |
+|---|---|---|---|---|---|---|---|
+| Logistic regression (baseline) | status, 37 | 0.745 [0.712–0.781] | 0.26 | 0.90 | 0.88 | 56% | 22% |
+| Logistic regression | change, 137 | 0.784 [0.751–0.813] | 0.32 | 0.94 | 0.94 | 61% | 25% |
+| Random forest | change, 137 | 0.787 [0.755–0.819] | 0.34 | 0.95 | 0.99 | 59% | 26% |
+| XGBoost | change, 137 | 0.788 [0.756–0.819] | 0.34 | 0.96 | 0.99 | 57% | 26% |
+
+Proposal targets: AUROC ≥ 0.75 and observed/expected 0.9–1.1. The baseline misses the AUROC target; all three change
+models meet both.
+
+**What we found**
+- **Change since last year is what helps.** Adding change features raises AUROC from 0.745 to 0.784 and AUPRC from
+  0.26 to 0.32.
+- **A more complex model does not.** Random forest and XGBoost are only 0.004 AUROC above logistic regression with
+  change. Paired bootstrap 95% CIs: −0.008 to +0.016 (RF) and −0.006 to +0.015 (XGBoost), so the gap is not real.
+  Logistic regression is simpler to explain and to export to the app, so it's the recommended model.
+- **Calibration.** The trees are slightly better calibrated (slope 0.99 vs 0.94). Logistic regression over-predicts
+  the riskiest tenth (39% predicted vs 33% observed). All CIs overlap.
+- **What drives risk (SHAP, XGBoost).** Physical performance tests and physical capacity, then household tasks getting
+  harder, then low energy, balance or breathing problems. The single biggest feature is the number of 10 physical
+  tasks the person can't do; the number of areas that got worse is also in the top five.
+- **Living alone lowers predicted risk.** This reflects the outcome (*receiving* help): people living alone have no one
+  at home to give it, so they are less likely to receive help, not less likely to need it.
+- **Who gets missed.** At the top-20% alert, missed cases look healthier at the check-in than caught cases: younger
+  (about 79 vs 84), fewer with any activity difficulty (26% vs 66%), fewer with any decline over the past year (51% vs
+  83%), and less dementia (13% vs 34%). Gradual decline is caught; sudden change is not.
+
+**Next steps**
+- **App-only model.** The top SHAP drivers include physical tests that can't be done in a 2-minute home check-in. Refit
+  logistic regression on only the questions a person can answer at home and measure what accuracy that costs.
+- **Fairness and robustness.** Accuracy and calibration by gender, race/ethnicity and income; results with and without
+  2020; attrition-weighted sensitivity analysis (`interpret.attrition_weights`).
 
 ## References
 
