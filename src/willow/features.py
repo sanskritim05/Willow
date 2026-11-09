@@ -152,11 +152,44 @@ FEATURE_SETS = {
     "status": lambda w: status_features(w),
     "snapshot": lambda w: status_features(w, ORDINAL_ITEMS + BINARY_ITEMS, STATIC),
     "change": lambda w: change_features(w),
+    # where the change gain comes from: past help alone vs the declines alone
+    "snapshot_history": lambda w: status_features(w, ORDINAL_ITEMS + BINARY_ITEMS, STATIC).assign(
+        prev_any_help=w["prev_any_help"].values),
+    "change_no_history": lambda w: change_features(w).drop(columns="prev_any_help"),
     # fairness mitigation only: add economic status (income) as a predictor. Race is never a predictor.
     "change_ses": lambda w: change_features(w).assign(
         log_income=np.log1p(w["income"].clip(lower=0)).values if "income" in w else np.nan,
         low_income=w["low_income"].values if "low_income" in w else np.nan),
 }
+
+
+SUMMARY_LABELS = {
+    "n_worse_difficulty": "Number of activities that got harder since last year",
+    "n_new_devices": "Number of newly used devices",
+    "n_new_doing_less": "Number of activities newly done less often",
+    "n_new_went_without": "Number of activities newly gone without",
+    "n_areas_declined": "Number of items that got worse since last year",
+    "prev_any_help": "Had help last year (none now)",
+}
+
+
+def feature_kind(name: str) -> str:
+    """'change' for anything built from t-1 vs t, otherwise 'status now'."""
+    return "change" if name.startswith(("d_", "new_", "n_")) or name == "prev_any_help" else "status now"
+
+
+def feature_label(name: str) -> str:
+    """Readable label for a model input (status items, changes, missing-value flags)."""
+    from .schema import ITEM_LABELS
+    if name.endswith(" (missing)"):
+        return feature_label(name.removesuffix(" (missing)")) + " (not answered)"
+    if name in SUMMARY_LABELS:
+        return SUMMARY_LABELS[name]
+    for prefix, fmt in (("cur_", "{}"), ("d_", "Change since last year: {}"), ("new_", "Newly: {}")):
+        if name.startswith(prefix):
+            item = name.removeprefix(prefix)
+            return fmt.format(ITEM_LABELS.get(item, item.replace("_", " ")))
+    return ITEM_LABELS.get(name, name.replace("_", " "))
 
 
 def make_X(w: pd.DataFrame, feature_set: str = "change") -> pd.DataFrame:

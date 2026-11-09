@@ -74,6 +74,20 @@ def test_baseline_logistic_end_to_end(windows):
     assert not {"race_eth", "income", "low_income"} & set(md.coefficients(model, list(X.columns)).feature)
 
 
+def test_paired_difference_and_feature_sets(windows):
+    from willow import metrics as mt
+    from willow.features import feature_label
+    y = np.array([0, 1] * 50)
+    rng = np.random.default_rng(0)
+    weak, strong = rng.random(100), y + 0.1 * rng.random(100)
+    d = mt.paired_difference(y, weak, strong, np.arange(100), n=50)
+    assert d.loc["auroc", "difference"] > 0 and d.loc["auroc", "share_b_better"] == 1
+    snap, hist = make_X(windows, "snapshot"), make_X(windows, "snapshot_history")
+    assert list(hist.columns) == list(snap.columns) + ["prev_any_help"]
+    assert "prev_any_help" not in make_X(windows, "change_no_history")
+    assert feature_label("d_bathing_diff").startswith("Change since last year")
+
+
 def test_alert_threshold_flags_top_share():
     from willow.metrics import alert_threshold
     p = np.linspace(0, 1, 101)

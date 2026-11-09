@@ -1,0 +1,13 @@
+,,difference,ci_low,ci_high,share_b_better
+Change vs snapshot (the effect of change features),auroc,0.01834365066086674,0.008235125452392338,0.030586586071063064,1.0
+Change vs snapshot (the effect of change features),auprc,0.01478099142307332,-0.00036086316230369696,0.03356519910547496,0.97
+Change vs status only (total gain over baseline),auroc,0.038321342925659474,0.018213149733977734,0.05964535940773598,1.0
+Change vs status only (total gain over baseline),auprc,0.05952180844588906,0.0296440543952907,0.10043742327353351,1.0
+Snapshot vs status only (effect of extra measures),auroc,0.019977692264792735,0.0031175337924938653,0.03849122213855625,0.99
+Snapshot vs status only (effect of extra measures),auprc,0.04474081702281574,0.015570019506626624,0.07798294649002643,1.0
+Past help alone (snapshot + past help vs snapshot),auroc,0.019322960236462183,0.007659727436375103,0.03138214732134233,1.0
+Past help alone (snapshot + past help vs snapshot),auprc,0.013833646134740196,-0.005137685080602727,0.03598079545552135,0.92
+Declines alone (change without past help vs snapshot),auroc,0.003053928949863449,-0.0021709149555579955,0.008584619815484425,0.878
+Declines alone (change without past help vs snapshot),auprc,0.00259984736832225,-0.007787351956310536,0.013919824972288148,0.685
+Declines on top of past help (change vs snapshot + past help),auroc,-0.000979309575595444,-0.006815432080601078,0.004769162371100796,0.373
+Declines on top of past help (change vs snapshot + past help),auprc,0.0009473452883331235,-0.011389592228287868,0.013068815441705248,0.573

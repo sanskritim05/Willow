@@ -1,0 +1,257 @@
+feature,label,kind,coef,odds_ratio_per_sd
+prev_any_help,Had help last year (none now),change,0.1229262385260629,1.1308010083221047
+age,Age (5-year group),status now,0.0670930623719608,1.0693949939786427
+cur_capacity_limits,"Number of 10 physical tasks the person cannot do (walk 6 blocks, climb stairs, ...)",status now,0.06590056524325211,1.0681205035829688
+cur_walk_time,Seconds to walk 3 m (best trial),status now,0.06232832320120908,1.0643117256028058
+cur_dementia_class,"Dementia classification (0 none, 1 possible, 2 probable)",status now,0.06153188051737898,1.0634643997836493
+lives_alone,Lives alone,status now,-0.059882504237416985,0.9418751934271998
+cur_balance_score,Balance stands completed (0-3),status now,-0.05674106713157961,0.9448386874868664
+cur_iadl_shopping_hhelp,Someone else does shopping because of health,status now,0.056028200927817635,1.057627509393104
+cur_cannot_walk_6blocks,Cannot walk 6 blocks,status now,0.054801128855135606,1.0563305201254223
+cur_iadl_meds_hhelp,Someone else does meds because of health,status now,0.048954949358501955,1.0501730387052397
+cur_grip_max,"Grip strength (kg, best trial)",status now,-0.048914883137089665,0.9522621798185043
+cur_go_out_freq,"How often goes outside (0 = every day, 4 = never)",status now,0.04856352932585084,1.0497620603779627
+cur_balance_problem,Balance or coordination problems,status now,0.045262239421465525,1.0463022056200943
+cur_dressing_diff,Difficulty dressing alone,status now,0.04445796696156818,1.0454610318831625
+cur_chair_time,Seconds for 5 chair stands,status now,0.04327400905963509,1.04422398248501
+cur_go_outside_device,Uses a device for go outside,status now,0.04196556219953363,1.0428585643772061
+cur_bathing_device,Uses a device for bathing,status now,0.04067084292773811,1.0415092289899057
+cur_iadl_banking_hhelp,Someone else does banking because of health,status now,0.03925688850465649,1.0400376230459396
+cur_toileting_device,Uses a device for toileting,status now,0.03915250959809976,1.0399290707214532
+cur_lower_body_weak,Lower-body strength limits activity,status now,0.0387073370664168,1.0394662258948149
+cur_get_around_inside_device,Uses a device for get around inside,status now,0.038521767845528215,1.0392733508535246
+cur_low_energy,Low energy in last month,status now,0.03728480978590703,1.0379886080563272
+cur_n_chronic,Number of chronic conditions (of 9),status now,0.03611301456381752,1.0367730103197286
+cur_iadl_laundry_hhelp,Someone else does laundry because of health,status now,0.034573237627699135,1.0351778395691813
+cur_go_outside_diff,Difficulty go outside alone,status now,0.03118273911374586,1.0316740138568925
+cur_self_rated_health,Self-rated health (1 excellent - 5 poor),status now,0.030809588936145993,1.0312891163321527
+n_worse_difficulty,Number of activities that got harder since last year,change,0.030584493033260007,1.0310570035021789
+cur_hospital_stay,Hospital stay in the last year,status now,0.02780060374816496,1.028190646619112
+cur_fell_last_year,Recent fall (NHATS: fell in the last month),status now,0.0270053589827729,1.0273733084245982
+new_iadl_shopping_hhelp,Newly: Someone else does shopping because of health,change,0.026860929150300084,1.0272249357847512
+n_areas_declined,Number of items that got worse since last year,change,0.02613673038258409,1.0264812900582492
+cur_chair_time (missing),Seconds for 5 chair stands (not answered),status now,0.025920977989764588,1.0262598481529042
+cur_get_out_of_bed_device,Uses a device for get out of bed,status now,0.025271679831927858,1.0255937158066921
+d_bmi (missing),Change since last year: Body-mass index (not answered),change,0.02486607403879156,1.0251778134060703
+d_chair_time (missing),Change since last year: Seconds for 5 chair stands (not answered),change,0.024225895815740514,1.0245217269237186
+d_grip_max (missing),"Change since last year: Grip strength (kg, best trial) (not answered)",change,0.02241002732252969,1.022663018295145
+cur_iadl_meals_hhelp,Someone else does meals because of health,status now,0.02240271208732501,1.0226555373019937
+cur_iadl_meds_diff,Difficulty doing meds by self,status now,0.02213761487590319,1.0223844701019769
+cur_poor_vision,Cannot see across the street,status now,0.021331094763492167,1.0215602288924583
+new_iadl_banking_hhelp,Newly: Someone else does banking because of health,change,0.021198090871323735,1.0214243664412488
+cur_dressing_device,Uses a device for dressing,status now,0.020599541820401364,1.020813176787867
+proxy,Interview answered by a proxy,status now,0.02052088063242668,1.0207328815687808
+cur_network_size (missing),People in social network (0-5) (not answered),status now,0.02052088063242668,1.0207328815687808
+cur_get_around_inside_diff,Difficulty get around inside alone,status now,0.020164876880418812,1.0203695615086341
+new_iadl_laundry_hhelp,Newly: Someone else does laundry because of health,change,0.019453004469970336,1.0196434470504234
+d_bathing_diff,Change since last year: Difficulty bathing alone,change,-0.019210205861731573,0.9809731342653768
+cur_phq2,"Depressive symptoms (PHQ-2, 0-6)",status now,0.018985184477196618,1.0191665490203066
+new_dressing_device,Newly: Uses a device for dressing,change,0.01818247614186261,1.0183487837937062
+d_perf_unable,Change since last year: Physical tests not completed (0-4),change,-0.017806671951508448,0.9823509299896688
+cur_network_size,People in social network (0-5),status now,0.01770237335172824,1.0178599890465267
+cur_fell_last_year (missing),Recent fall (NHATS: fell in the last month) (not answered),status now,0.017510155207982117,1.0176643566914851
+cur_breathing_problem,Breathing problems,status now,0.016817007814765004,1.0169592097091034
+new_go_outside_wout,Newly: Went without go outside (no help / too hard),change,-0.016373500507823945,0.98375981663711
+new_bathing_device,Newly: Uses a device for bathing,change,-0.016151142557651203,0.9839785877752493
+cur_phq2 (missing),"Depressive symptoms (PHQ-2, 0-6) (not answered)",status now,0.015710376503302693,1.0158344332763554
+new_iadl_meds_diff,Newly: Difficulty doing meds by self,change,0.015610448101423164,1.0157329276365965
+d_go_outside_diff,Change since last year: Difficulty go outside alone,change,-0.015303327612615079,0.984813173264595
+cur_dressing_less,Does dressing less often than a year ago,status now,0.014987286127007131,1.0151001586791844
+new_get_around_inside_device (missing),Newly: Uses a device for get around inside (not answered),change,0.014549098990374378,1.0146554522866833
+cur_bmi (missing),Body-mass index (not answered),status now,0.014522608541762702,1.014628573964577
+new_fell_last_year,Newly: Recent fall (NHATS: fell in the last month),change,0.014480851604460653,1.0145862070673912
+d_balance_score,Change since last year: Balance stands completed (0-3),change,0.014462549208713637,1.0145676378790407
+medicaid (missing),Covered by Medicaid (not answered),status now,0.014423389341050022,1.0145279083225127
+cur_go_outside_diff (missing),Difficulty go outside alone (not answered),status now,0.014320167976537375,1.0144231927720135
+cur_toileting_device (missing),Uses a device for toileting (not answered),status now,0.0141658280798736,1.014266638882834
+cur_eating_diff,Difficulty eating alone,status now,0.01412734049005457,1.0142276029556738
+new_iadl_meds_hhelp,Newly: Someone else does meds because of health,change,0.013760274180709364,1.0138553824915963
+medicaid,Covered by Medicaid,status now,0.013554902973175268,1.0136471871668233
+new_poor_vision (missing),Newly: Cannot see across the street (not answered),change,0.01351083374444694,1.0136025175013683
+cur_iadl_meals_diff,Difficulty doing meals by self,status now,0.013110344299018022,1.0131966616671626
+new_breathing_problem,Newly: Breathing problems,change,0.013076700257179226,1.0131625742097097
+new_hospital_stay,Newly: Hospital stay in the last year,change,0.0130725380421642,1.0131583572180065
+cur_bathing_diff,Difficulty bathing alone,status now,0.012776910037105793,1.0128588835026435
+cur_get_around_inside_less,Does get around inside less often than a year ago,status now,0.01263056694480663,1.0127106694468853
+cur_iadl_meds_diff (missing),Difficulty doing meds by self (not answered),status now,-0.012496669342493138,0.987581089782774
+cur_get_out_of_bed_wout,Went without get out of bed (no help / too hard),status now,0.01224564994117721,1.0123209349029967
+cur_cannot_climb_10stairs,Cannot climb 10 stairs,status now,0.012217769164854985,1.0122927110028983
+new_pain_limits,Newly: Pain limits activities,change,0.012211203365533874,1.0122860645139233
+d_toileting_diff,Change since last year: Difficulty toileting alone,change,-0.012128148522946672,0.9879451010440938
+cur_memory_worse,Memory worse than a year ago (self or proxy report),status now,0.012056735124862307,1.0121297105426539
+new_cannot_climb_10stairs,Newly: Cannot climb 10 stairs,change,0.011824462248826297,1.0118946475642985
+cur_bathing_less,Does bathing less often than a year ago,status now,0.011801579226931529,1.0118714926218515
+d_phq2 (missing),"Change since last year: Depressive symptoms (PHQ-2, 0-6) (not answered)",change,0.01172496671519154,1.011793973574746
+new_poor_hearing (missing),Newly: Cannot hear well on the phone (not answered),change,0.011644337245617408,1.0117123964521426
+cur_cannot_climb_10stairs (missing),Cannot climb 10 stairs (not answered),status now,0.011351449058163154,1.011416121231995
+cur_iadl_meds_hhelp (missing),Someone else does meds because of health (not answered),status now,-0.011233332434831923,0.9888295258544438
+cur_iadl_banking_diff,Difficulty doing banking by self,status now,0.011209597422705065,1.0112726603763886
+d_get_out_of_bed_diff,Change since last year: Difficulty get out of bed alone,change,-0.011171124326031562,0.9888910409825233
+new_get_around_inside_less (missing),Newly: Does get around inside less often than a year ago (not answered),change,0.011129768089698873,1.0111919343766176
+new_poor_vision,Newly: Cannot see across the street,change,0.010988953234492782,1.0110495535556954
+d_get_out_of_bed_diff (missing),Change since last year: Difficulty get out of bed alone (not answered),change,-0.01087923878808646,0.9891797261054461
+d_n_chronic,Change since last year: Number of chronic conditions (of 9),change,-0.010740623028930963,0.9893168515077728
+cur_pain_limits,Pain limits activities,status now,0.010733961812445281,1.0107917774590172
+cur_toileting_diff (missing),Difficulty toileting alone (not answered),status now,-0.010700090970364316,0.9893569513689986
+cur_bathing_diff (missing),Difficulty bathing alone (not answered),status now,0.010699020055025661,1.0107564592349714
+cur_grip_max (missing),"Grip strength (kg, best trial) (not answered)",status now,0.010598634425169654,1.010654998903845
+new_eating_device (missing),Newly: Uses a device for eating (not answered),change,0.010591434860627665,1.0106477226541435
+new_get_out_of_bed_device,Newly: Uses a device for get out of bed,change,0.01057918336381863,1.0106353407826427
+cur_go_out_freq (missing),"How often goes outside (0 = every day, 4 = never) (not answered)",status now,0.010562109087111029,1.0106180850624986
+new_iadl_banking_diff (missing),Newly: Difficulty doing banking by self (not answered),change,0.010435307385945036,1.0104899450944382
+cur_bathing_less (missing),Does bathing less often than a year ago (not answered),status now,-0.010321269842084093,0.9897318116836088
+cur_go_outside_less (missing),Does go outside less often than a year ago (not answered),status now,0.010128412619441748,1.0101798786000105
+new_get_out_of_bed_wout,Newly: Went without get out of bed (no help / too hard),change,0.010033707024226571,1.0100842134434176
+d_network_size (missing),Change since last year: People in social network (0-5) (not answered),change,0.01001362649269209,1.0100639306191626
+cur_get_around_inside_less (missing),Does get around inside less often than a year ago (not answered),status now,-0.009887984409550696,0.990160740977423
+cur_stroke,Ever had a stroke,status now,0.009887587490613591,1.0099366311918268
+cur_go_outside_wout (missing),Went without go outside (no help / too hard) (not answered),status now,-0.009662552045218858,0.990383980416082
+female,Female,status now,0.0096554731657196,1.0097022376365954
+new_fell_last_year (missing),Newly: Recent fall (NHATS: fell in the last month) (not answered),change,0.0094174750604674,1.009461959011232
+new_bathing_wout (missing),Newly: Went without bathing (no help / too hard) (not answered),change,-0.009417224589827257,0.9906269786037029
+cur_memory_poor (missing),Rates memory fair or poor (not answered),status now,0.009381222214741962,1.0094253638059103
+cur_go_outside_device (missing),Uses a device for go outside (not answered),status now,0.009265343884800327,1.0093084000574646
+new_dressing_less (missing),Newly: Does dressing less often than a year ago (not answered),change,0.009251538315204916,1.0092944660762877
+cur_get_out_of_bed_device (missing),Uses a device for get out of bed (not answered),status now,-0.009230241365923555,0.9908122265484374
+cur_go_outside_less,Does go outside less often than a year ago,status now,0.009182203095040722,1.0092244888482431
+d_toileting_diff (missing),Change since last year: Difficulty toileting alone (not answered),change,-0.009123301996306335,0.9909181890490341
+new_balance_problem (missing),Newly: Balance or coordination problems (not answered),change,0.009117520171941364,1.0091592113694328
+cur_weight_loss_10lb,Lost 10+ lb in last year,status now,0.009013801709102574,1.0090545483551072
+new_breathing_problem (missing),Newly: Breathing problems (not answered),change,0.008945966014223051,1.0089861007602696
+d_get_around_inside_diff,Change since last year: Difficulty get around inside alone,change,-0.008881901002690559,0.991157426559387
+new_iadl_banking_diff,Newly: Difficulty doing banking by self,change,0.00875398896345171,1.008792417176373
+new_go_outside_device,Newly: Uses a device for go outside,change,0.008494704147943441,1.0085308865275273
+new_weight_loss_10lb (missing),Newly: Lost 10+ lb in last year (not answered),change,0.008351377469120487,1.0083863475034676
+d_eating_diff,Change since last year: Difficulty eating alone,change,-0.008118543068878152,0.9919143232994193
+cur_iadl_laundry_diff (missing),Difficulty doing laundry by self (not answered),status now,0.008087761053218775,1.008120555343822
+d_dementia_class,"Change since last year: Dementia classification (0 none, 1 possible, 2 probable)",change,0.008023800351267672,1.0080560773075031
+new_get_around_inside_wout (missing),Newly: Went without get around inside (no help / too hard) (not answered),change,-0.007985583956757346,0.9920462161151267
+cur_iadl_laundry_hhelp (missing),Someone else does laundry because of health (not answered),status now,0.007641069546090363,1.0076703370154263
+d_network_size,Change since last year: People in social network (0-5),change,0.0075836519587799784,1.0076124806768723
+cur_eating_wout,Went without eating (no help / too hard),status now,-0.007566935132857005,0.9924616220452929
+new_eating_wout,Newly: Went without eating (no help / too hard),change,-0.007566935132857005,0.9924616220452929
+cur_iadl_shopping_diff,Difficulty doing shopping by self,status now,-0.007528544745542741,0.9924997237627229
+new_bathing_wout,Newly: Went without bathing (no help / too hard),change,-0.0074937524910691534,0.992534255666395
+d_self_rated_health,Change since last year: Self-rated health (1 excellent - 5 poor),change,-0.007407598722898667,0.9926197699161934
+cur_toileting_diff,Difficulty toileting alone,status now,0.00726810528831727,1.007294582072039
+cur_get_around_inside_diff (missing),Difficulty get around inside alone (not answered),status now,-0.007252970356617455,0.9927732689569011
+new_get_out_of_bed_wout (missing),Newly: Went without get out of bed (no help / too hard) (not answered),change,-0.007137982680399724,0.9928874322116674
+cur_perf_unable,Physical tests not completed (0-4),status now,0.007000911934357919,1.0070254756075603
+cur_bmi,Body-mass index,status now,-0.006896792674488983,0.9931269356190643
+new_get_out_of_bed_device (missing),Newly: Uses a device for get out of bed (not answered),change,-0.006877312052818376,0.9931462825376124
+n_new_went_without,Number of activities newly gone without,change,-0.00685570384882852,0.9931677428769361
+cur_bathing_wout,Went without bathing (no help / too hard),status now,0.006816103788558006,1.0068393862925802
+new_bathing_less,Newly: Does bathing less often than a year ago,change,0.0068147747324600935,1.0068380481474435
+cur_iadl_shopping_diff (missing),Difficulty doing shopping by self (not answered),status now,0.006775138145502914,1.0067981413144869
+new_dressing_less,Newly: Does dressing less often than a year ago,change,-0.0067666225579946955,0.9932562194822326
+new_lower_body_weak (missing),Newly: Lower-body strength limits activity (not answered),change,0.0066379085690769805,1.0066599883115637
+new_memory_poor (missing),Newly: Rates memory fair or poor (not answered),change,0.0065507866288010965,1.0065722899604648
+d_bathing_diff (missing),Change since last year: Difficulty bathing alone (not answered),change,0.006411170373041113,1.0064317659161373
+cur_stroke (missing),Ever had a stroke (not answered),status now,0.006385221385211884,1.0064056503693302
+d_capacity_limits,"Change since last year: Number of 10 physical tasks the person cannot do (walk 6 blocks, climb stairs, ...)",change,-0.00633720076631504,0.9936828369404606
+new_go_outside_less (missing),Newly: Does go outside less often than a year ago (not answered),change,0.006234285380881648,1.0062537589849556
+new_iadl_meals_hhelp,Newly: Someone else does meals because of health,change,0.006230624989387693,1.0062500757089967
+new_iadl_shopping_diff,Newly: Difficulty doing shopping by self,change,0.006210167961196779,1.0062294910333822
+cur_iadl_meals_hhelp (missing),Someone else does meals because of health (not answered),status now,-0.006194873252786819,0.9938242754129323
+d_get_around_inside_diff (missing),Change since last year: Difficulty get around inside alone (not answered),change,-0.006129648585706151,0.9938890993844708
+cur_get_around_inside_device (missing),Uses a device for get around inside (not answered),status now,0.005691448602915711,1.0057076756670762
+new_bathing_less (missing),Newly: Does bathing less often than a year ago (not answered),change,-0.005664534465988325,0.9943514787592804
+cur_bathing_wout (missing),Went without bathing (no help / too hard) (not answered),status now,-0.005578149990993771,0.9944373789999033
+new_stroke (missing),Newly: Ever had a stroke (not answered),change,0.0055441864546671845,1.005559583898671
+new_cannot_walk_6blocks,Newly: Cannot walk 6 blocks,change,0.005516662006741629,1.005531906807168
+new_pain_limits (missing),Newly: Pain limits activities (not answered),change,-0.005505157681363842,0.9945099679301634
+new_low_energy,Newly: Low energy in last month,change,0.00541350811263361,1.0054281876249418
+new_stroke,Newly: Ever had a stroke,change,-0.0053623336001918,0.9946520180463967
+d_go_outside_diff (missing),Change since last year: Difficulty go outside alone (not answered),change,0.005350641743342451,1.0053649819919779
+new_dressing_wout,Newly: Went without dressing (no help / too hard),change,0.005058131637137518,1.0050709455807283
+d_go_out_freq (missing),"Change since last year: How often goes outside (0 = every day, 4 = never) (not answered)",change,-0.004956669791499788,0.9950555942249509
+new_iadl_meds_hhelp (missing),Newly: Someone else does meds because of health (not answered),change,-0.0047610202708252974,0.9952502954209823
+new_iadl_meals_hhelp (missing),Newly: Someone else does meals because of health (not answered),change,-0.0044148268309812146,0.995594904191466
+cur_poor_hearing (missing),Cannot hear well on the phone (not answered),status now,-0.004296452388956961,0.9957127641583982
+cur_dressing_less (missing),Does dressing less often than a year ago (not answered),status now,-0.004247861947281605,0.9957611474568637
+d_eating_diff (missing),Change since last year: Difficulty eating alone (not answered),change,0.004221348568484766,1.0042302710108484
+cur_cannot_walk_6blocks (missing),Cannot walk 6 blocks (not answered),status now,0.004216820906923922,1.0042257242063453
+cur_capacity_limits (missing),"Number of 10 physical tasks the person cannot do (walk 6 blocks, climb stairs, ...) (not answered)",status now,0.004216820906923922,1.0042257242063453
+new_iadl_laundry_hhelp (missing),Newly: Someone else does laundry because of health (not answered),change,-0.004069627732190996,0.9959386419807271
+cur_go_outside_wout,Went without go outside (no help / too hard),status now,-0.004013671395775343,0.9959943726176538
+cur_iadl_laundry_diff,Difficulty doing laundry by self,status now,0.003916495960085829,1.0039241754526829
+new_low_energy (missing),Newly: Low energy in last month (not answered),change,0.0038544138218657535,1.003861851627878
+new_dressing_device (missing),Newly: Uses a device for dressing (not answered),change,0.0035170307118027717,1.003523222721351
+new_iadl_laundry_diff,Newly: Difficulty doing laundry by self,change,-0.003486341874472745,0.996519728359008
+d_balance_score (missing),Change since last year: Balance stands completed (0-3) (not answered),change,-0.003444043030912894,0.9965618808825975
+new_iadl_meals_diff (missing),Newly: Difficulty doing meals by self (not answered),change,0.0033867665899445063,1.0033925081638724
+cur_pain_limits (missing),Pain limits activities (not answered),status now,-0.0033698727673138027,0.9966357988812201
+d_phq2,"Change since last year: Depressive symptoms (PHQ-2, 0-6)",change,-0.0033509918329939154,0.996654616473926
+d_walk_time,Change since last year: Seconds to walk 3 m (best trial),change,-0.0032771159118322717,0.9967282479715619
+new_dressing_wout (missing),Newly: Went without dressing (no help / too hard) (not answered),change,-0.003262347018315831,0.9967429686536248
+d_grip_max,"Change since last year: Grip strength (kg, best trial)",change,-0.0032609198062847535,0.9967443912181967
+cur_balance_problem (missing),Balance or coordination problems (not answered),status now,-0.003234864801897953,0.996770361736012
+cur_eating_diff (missing),Difficulty eating alone (not answered),status now,-0.0031623477211877938,0.9968426472337184
+cur_breathing_problem (missing),Breathing problems (not answered),status now,0.0031050243687113614,1.0031098499500999
+d_bmi,Change since last year: Body-mass index,change,0.002997113891062839,1.0030016097272898
+covid_change,Change measured across 2020 (pandemic),status now,0.0029215941647190036,1.0029258661803029
+new_lower_body_weak,Newly: Lower-body strength limits activity,change,0.002884227874474277,1.0028883912614468
+new_iadl_shopping_diff (missing),Newly: Difficulty doing shopping by self (not answered),change,-0.002727819489552611,0.9972758976293865
+new_bathing_device (missing),Newly: Uses a device for bathing (not answered),change,0.0027105573785002686,1.002714234260534
+d_walk_time (missing),Change since last year: Seconds to walk 3 m (best trial) (not answered),change,0.0027045199055992395,1.0027081804187923
+new_get_around_inside_less,Newly: Does get around inside less often than a year ago,change,-0.0026805695980167874,0.9973230199206337
+new_iadl_meals_diff,Newly: Difficulty doing meals by self,change,0.002476522272215113,1.0024795913865512
+new_iadl_laundry_diff (missing),Newly: Difficulty doing laundry by self (not answered),change,0.002442630997482961,1.002445616651033
+cur_eating_device (missing),Uses a device for eating (not answered),status now,0.0023963479718726068,1.0023992215085467
+cur_self_rated_health (missing),Self-rated health (1 excellent - 5 poor) (not answered),status now,0.0022666169135828382,1.00226918763161
+new_toileting_device (missing),Newly: Uses a device for toileting (not answered),change,0.002225294335497765,1.0022277721405453
+cur_get_out_of_bed_diff,Difficulty get out of bed alone,status now,0.0022168484792965317,1.0022193075046464
+new_memory_worse (missing),Newly: Memory worse than a year ago (self or proxy report) (not answered),change,0.0021641035953341723,1.0021664469576412
+cur_poor_hearing,Cannot hear well on the phone,status now,0.001937482024837057,1.001939360155888
+cur_dressing_wout,Went without dressing (no help / too hard),status now,0.0018857695330730519,1.0018875487146386
+cur_perf_unable (missing),Physical tests not completed (0-4) (not answered),status now,0.0018849207754202553,1.0018866983552754
+covid_outcome,Outcome measured in 2020-21 (pandemic),status now,-0.0018791539619038445,0.9981226105424709
+cur_iadl_banking_diff (missing),Difficulty doing banking by self (not answered),status now,0.0018758389097262892,1.0018775993961582
+cur_weight_loss_10lb (missing),Lost 10+ lb in last year (not answered),status now,0.0018339444532596433,1.0018356271578934
+d_perf_unable (missing),Change since last year: Physical tests not completed (0-4) (not answered),change,-0.0018238160982593657,0.9981778460436868
+cur_low_energy (missing),Low energy in last month (not answered),status now,-0.0018228272677231786,0.9981788330729096
+new_go_outside_less,Newly: Does go outside less often than a year ago,change,-0.001758076218596362,0.9982434682921437
+cur_balance_score (missing),Balance stands completed (0-3) (not answered),status now,0.001648215568390458,1.0016495746222391
+d_self_rated_health (missing),Change since last year: Self-rated health (1 excellent - 5 poor) (not answered),change,0.0016041352123095693,1.0016054225254487
+new_hospital_stay (missing),Newly: Hospital stay in the last year (not answered),change,-0.0015947863612970248,0.9984064846347266
+n_new_doing_less,Number of activities newly done less often,change,-0.001496777399393443,0.9985043422132249
+cur_memory_worse (missing),Memory worse than a year ago (self or proxy report) (not answered),status now,0.001465801547006376,1.0014668763591836
+d_capacity_limits (missing),"Change since last year: Number of 10 physical tasks the person cannot do (walk 6 blocks, climb stairs, ...) (not answered)",change,-0.0014595194071884033,0.9985415451732733
+new_cannot_walk_6blocks (missing),Newly: Cannot walk 6 blocks (not answered),change,-0.0014595194071884033,0.9985415451732733
+new_iadl_banking_hhelp (missing),Newly: Someone else does banking because of health (not answered),change,0.0014524796147001146,1.0014535349741165
+new_weight_loss_10lb,Newly: Lost 10+ lb in last year,change,-0.0014506060439230973,0.9985504455764671
+d_dressing_diff (missing),Change since last year: Difficulty dressing alone (not answered),change,0.0013159614462550247,1.0013168277034643
+new_get_around_inside_device,Newly: Uses a device for get around inside,change,0.0013068438300787152,1.0013076981225786
+n_new_devices,Number of newly used devices,change,0.0012949024956308308,1.0012957412438608
+d_dressing_diff,Change since last year: Difficulty dressing alone,change,-0.0011827621571542043,0.9988179370303213
+cur_eating_device,Uses a device for eating,status now,-0.001132891614124951,0.9988677498653147
+cur_hospital_stay (missing),Hospital stay in the last year (not answered),status now,0.0011294901016773399,1.0011301282158476
+cur_poor_vision (missing),Cannot see across the street (not answered),status now,-0.0010470632664955142,0.9989534847129734
+cur_bathing_device (missing),Uses a device for bathing (not answered),status now,-0.0010183501804067962,0.9989821681621718
+cur_lower_body_weak (missing),Lower-body strength limits activity (not answered),status now,-0.0009886165535555368,0.9990118719667898
+new_eating_wout (missing),Newly: Went without eating (no help / too hard) (not answered),change,-0.0009659105378544419,0.999034555803569
+cur_get_out_of_bed_diff (missing),Difficulty get out of bed alone (not answered),status now,-0.0009651486595003006,0.999035316946662
+new_go_outside_device (missing),Newly: Uses a device for go outside (not answered),change,-0.0008977350924154568,0.9991026677511746
+new_memory_poor,Newly: Rates memory fair or poor,change,0.0008549727916426924,1.0008553383850634
+new_get_around_inside_wout,Newly: Went without get around inside (no help / too hard),change,0.0008275799364006759,1.0008279224751624
+new_memory_worse,Newly: Memory worse than a year ago (self or proxy report),change,-0.0008247880919593533,0.9991755519522444
+cur_iadl_meals_diff (missing),Difficulty doing meals by self (not answered),status now,0.000749871626492552,1.0007501528505103
+new_poor_hearing,Newly: Cannot hear well on the phone,change,0.0007136419612520113,1.0007138966642617
+new_cannot_climb_10stairs (missing),Newly: Cannot climb 10 stairs (not answered),change,-0.0006353244709051599,0.9993648773049532
+new_go_outside_wout (missing),Newly: Went without go outside (no help / too hard) (not answered),change,-0.0006083148426735521,0.9993918701432886
+cur_dressing_wout (missing),Went without dressing (no help / too hard) (not answered),status now,-0.0005426124098354431,0.9994575347776551
+cur_get_around_inside_wout (missing),Went without get around inside (no help / too hard) (not answered),status now,-0.0005426124098354431,0.9994575347776551
+new_iadl_meds_diff (missing),Newly: Difficulty doing meds by self (not answered),change,-0.0005332154100186775,0.9994669267240542
+cur_iadl_banking_hhelp (missing),Someone else does banking because of health (not answered),status now,-0.0004642009446139578,0.9995359067799753
+new_balance_problem,Newly: Balance or coordination problems,change,0.00045686262472495676,1.0004569670023487
+cur_memory_poor,Rates memory fair or poor,status now,-0.00042639068054247975,0.9995737002110449
+new_toileting_device,Newly: Uses a device for toileting,change,-0.0004012416663270284,0.9995988388203452
+cur_get_around_inside_wout,Went without get around inside (no help / too hard),status now,-0.00039836820337053685,0.9996017111347066
+cur_iadl_shopping_hhelp (missing),Someone else does shopping because of health (not answered),status now,0.00036302096995312816,1.0003630868700395
+d_go_out_freq,"Change since last year: How often goes outside (0 = every day, 4 = never)",change,-0.0002884925794486702,0.999711549030534
+d_chair_time,Change since last year: Seconds for 5 chair stands,change,0.0002526428098269585,1.0002526747267095
+cur_dressing_diff (missing),Difficulty dressing alone (not answered),status now,-0.00022418416099339317,0.9997758409663978
+new_eating_device,Newly: Uses a device for eating,change,-0.00015608909861132997,0.9998439230826582
+cur_walk_time (missing),Seconds to walk 3 m (best trial) (not answered),status now,-0.0001020414063660126,0.9998979637996812
+cur_dressing_device (missing),Uses a device for dressing (not answered),status now,7.435386191661833e-05,1.0000743566262336
+new_iadl_shopping_hhelp (missing),Newly: Someone else does shopping because of health (not answered),change,7.285724479901318e-05,1.0000728598989526

@@ -16,7 +16,7 @@ models (logistic regression, random forest, XGBoost) with SHAP explanations.
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 pytest -q                     # fake test data only; no NHATS needed
-jupyter lab notebooks/        # 02_clean, 01_explore, 03_model, then 04_trees (kernel: the project's .venv)
+jupyter lab notebooks/        # 02_clean, 01_explore, 03_model, 04_trees, then 05_change_value (kernel: the project's .venv)
 ```
 
 NHATS files are expected in `NHATS Data/data/raw/round_01 … round_14` inside the repo (git-ignored). Pass another folder
@@ -42,6 +42,7 @@ of the 7 activities at `t`: going outside, moving inside, getting out of bed, ea
 | `notebooks/01_explore.ipynb` | Aggregate-only tour: source-file coverage, sample and cohorts, how people leave the study, activity trends (survey-weighted), outcome rate, changes before new help, fairness group sizes, pandemic rounds. |
 | `notebooks/03_model.ipynb` | Baseline model: logistic regression on status only. Person + time split, 5-fold person-grouped tuning, Platt recalibration, one test-set evaluation with bootstrap CIs, calibration plot, odds ratios. Writes `results/model_lr_status_*`. |
 | `notebooks/04_trees.ipynb` | Change-feature models: logistic regression, random forest and XGBoost on the same split as 03. Grouped-CV random search for the trees, Platt recalibration, one test-set evaluation with bootstrap CIs, midpoint comparison table, paired AUROC test, calibration plot, SHAP by change group, error analysis and alert levels. Writes `results/model_*_change_*` and `results/midpoint_*`. |
+| `notebooks/05_change_value.ipynb` | Do changes add value? Logistic regression with change features compared on the same split with status-only and snapshot models: paired AUROC/AUPRC differences, alerts per 1,000 people, calibration, odds ratios, and a breakdown of where the gain comes from (past help vs declines). Writes `results/model_lr_snapshot_*`, `model_lr_change_coefficients.csv`, `comparisons_lr.csv`. |
 | `src/willow/models.py`, `metrics.py` | Train/test split, grouped cross-validation, logistic regression, random forest, XGBoost (random-search tuning), Platt scaling; AUROC, AUPRC, calibration, top-20% alert metrics, person-level bootstrap CIs. |
 | `config/variables.yaml` | Maps NHATS variable names to Willow's variables and records every recode rule. |
 | `src/willow/nhats.py` | Loads the NHATS files, applies the recodes, carries cohort-entry demographics forward, attaches income, builds the long panel. |

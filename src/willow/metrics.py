@@ -55,6 +55,34 @@ def bootstrap_ci(y, p, groups, threshold: float, n: int = 1000, seed: int = 5600
     return pd.DataFrame({"estimate": point, "ci_low": d.quantile(0.025), "ci_high": d.quantile(0.975)})
 
 
+def paired_difference(y, p_a, p_b, groups, n: int = 1000, seed: int = 5600) -> pd.DataFrame:
+    """Model B minus model A on the SAME test people: AUROC and AUPRC differences with 95% CIs from one person-level
+    bootstrap, plus the share of resamples in which B is better."""
+    y, p_a, p_b, groups = map(np.asarray, (y, p_a, p_b, groups))
+    ids, inv = np.unique(groups, return_inverse=True)
+    rows_of = [np.flatnonzero(inv == i) for i in range(len(ids))]
+    rng = np.random.default_rng(seed)
+    fns = {"auroc": roc_auc_score, "auprc": average_precision_score}
+    draws = {k: [] for k in fns}
+    for _ in range(n):
+        idx = np.concatenate([rows_of[i] for i in rng.integers(0, len(ids), len(ids))])
+        if 0 < y[idx].sum() < len(idx):
+            for k, f in fns.items():
+                draws[k].append(f(y[idx], p_b[idx]) - f(y[idx], p_a[idx]))
+    return pd.DataFrame({k: {"difference": f(y, p_b) - f(y, p_a), "ci_low": np.quantile(draws[k], 0.025),
+                             "ci_high": np.quantile(draws[k], 0.975), "share_b_better": np.mean(np.array(draws[k]) > 0)}
+                         for k, f in fns.items()}).T
+
+
+def per_1000(y, p, threshold: float) -> dict:
+    """The top-20% alert rule translated into people: per 1,000 at-risk adults, how many are flagged, how many of those
+    need help, how many who need help are caught or missed."""
+    y, flag = np.asarray(y), np.asarray(p) >= threshold
+    k = 1000 / len(y)
+    return {"need help": k * y.sum(), "flagged": k * flag.sum(), "correct alerts": k * (flag & (y == 1)).sum(),
+            "false alarms": k * (flag & (y == 0)).sum(), "missed": k * (~flag & (y == 1)).sum()}
+
+
 def calibration_table(y, p, bins: int = 10) -> pd.DataFrame:
     """Mean predicted vs observed risk by decile of predicted risk."""
     df = pd.DataFrame({"y": np.asarray(y), "p": np.asarray(p)})

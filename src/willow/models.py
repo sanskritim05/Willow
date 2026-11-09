@@ -18,6 +18,8 @@ from sklearn.model_selection import ParameterSampler, StratifiedGroupKFold
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
+from .features import make_X
+
 SEED = 5600
 
 
@@ -62,6 +64,18 @@ def tune_logistic(X: pd.DataFrame, y: np.ndarray, folds, grid=(1e-4, 3e-4, 1e-3,
     table = pd.DataFrame(rows)
     best = float(table.loc[table["cv_auroc"].idxmax(), "C"])
     return table, best, oof[best]
+
+
+def fit_logistic_model(train: pd.DataFrame, test: pd.DataFrame, feature_set: str, outcome: str = "y_any") -> dict:
+    """The whole recipe for one feature set: tune C on grouped CV, fit on all training data, Platt-recalibrate
+    on the out-of-fold predictions, predict the test set once. Same seed -> same folds for every feature set."""
+    X, y = make_X(train, feature_set), train[outcome].values
+    cv, C, oof = tune_logistic(X, y, grouped_folds(train, outcome))
+    model = logistic(C).fit(X, y)
+    platt = platt_fit(oof, y)
+    p_test = platt_apply(platt, model.predict_proba(make_X(test, feature_set))[:, 1])
+    return {"feature_set": feature_set, "n_features": X.shape[1], "columns": list(X.columns), "cv": cv, "C": C,
+            "model": model, "p_train": platt_apply(platt, oof), "p_test": p_test}
 
 
 def coefficients(model, columns) -> pd.DataFrame:
