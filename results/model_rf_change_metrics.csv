@@ -1,0 +1,11 @@
+,estimate,ci_low,ci_high,model,threshold,best
+auroc,0.7873492833640066,0.7550743166262724,0.8192484080761337,rf_change,0.15263874860274626,"{'min_samples_leaf': 20, 'max_features': 0.2, 'max_depth': 14}"
+auprc,0.3368118816039669,0.28321181505954396,0.40726539933097333,rf_change,0.15263874860274626,"{'min_samples_leaf': 20, 'max_features': 0.2, 'max_depth': 14}"
+brier,0.0730945342088741,0.06523798416781103,0.08134321395674826,rf_change,0.15263874860274626,"{'min_samples_leaf': 20, 'max_features': 0.2, 'max_depth': 14}"
+obs_exp,0.9514743783884119,0.8432912119809884,1.0644051350506578,rf_change,0.15263874860274626,"{'min_samples_leaf': 20, 'max_features': 0.2, 'max_depth': 14}"
+cal_slope,0.9907158202354118,0.8543374993464558,1.149759778593804,rf_change,0.15263874860274626,"{'min_samples_leaf': 20, 'max_features': 0.2, 'max_depth': 14}"
+cal_intercept,-0.08010512145235507,-0.35840945120869344,0.2245648431322193,rf_change,0.15263874860274626,"{'min_samples_leaf': 20, 'max_features': 0.2, 'max_depth': 14}"
+flagged_pct,20.869565217391305,18.852557711770018,23.003125983798906,rf_change,0.15263874860274626,"{'min_samples_leaf': 20, 'max_features': 0.2, 'max_depth': 14}"
+sensitivity,0.586046511627907,0.5231481481481481,0.6531576576576577,rf_change,0.15263874860274626,"{'min_samples_leaf': 20, 'max_features': 0.2, 'max_depth': 14}"
+precision,0.2625,0.22462203023758098,0.3032447420031108,rf_change,0.15263874860274626,"{'min_samples_leaf': 20, 'max_features': 0.2, 'max_depth': 14}"
+prevalence,0.09347826086956522,0.08156923822514392,0.1060924800061372,rf_change,0.15263874860274626,"{'min_samples_leaf': 20, 'max_features': 0.2, 'max_depth': 14}"

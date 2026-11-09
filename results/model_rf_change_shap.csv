@@ -1,0 +1,138 @@
+feature,label,mean_abs_shap,higher_value_means
+cur_capacity_limits,"Number of 10 physical tasks the person cannot do (walk 6 blocks, climb stairs, ...)",0.014709320768348803,higher risk
+prev_any_help,prev_any_help,0.01348886489269299,higher risk
+cur_iadl_shopping_hhelp,Someone else does shopping because of health,0.011082387144593597,higher risk
+cur_walk_time,Seconds to walk 3 m (best trial),0.007952669758192251,higher risk
+cur_cannot_walk_6blocks,Cannot walk 6 blocks,0.007259133982139308,higher risk
+n_areas_declined,n_areas_declined,0.007030824807629806,higher risk
+cur_go_outside_device,Uses a device for go outside,0.00687670688281764,higher risk
+cur_chair_time,Seconds for 5 chair stands,0.005550828509766909,higher risk
+cur_get_around_inside_device,Uses a device for get around inside,0.0049413998252153465,higher risk
+cur_balance_score,Balance stands completed (0-3),0.004627038450870755,lower risk
+cur_dementia_class,"Dementia classification (0 none, 1 possible, 2 probable)",0.004133629543081198,higher risk
+cur_grip_max,"Grip strength (kg, best trial)",0.0034134300362954934,lower risk
+cur_iadl_banking_hhelp,Someone else does banking because of health,0.0032722910656684963,higher risk
+cur_balance_problem,Balance or coordination problems,0.002956233201863592,higher risk
+age,Age (5-year group),0.0028530846907820497,higher risk
+n_worse_difficulty,n_worse_difficulty,0.0028493639823686683,higher risk
+cur_go_outside_diff,Difficulty go outside alone,0.0026356838334282,higher risk
+d_bmi,Body-mass index (change),0.0024849473095766013,lower risk
+cur_bmi,Body-mass index,0.0023130249876048333,lower risk
+lives_alone,Lives alone,0.0021007876765218717,lower risk
+d_walk_time,Seconds to walk 3 m (best trial) (change),0.0020247542815148216,higher risk
+cur_dressing_diff,Difficulty dressing alone,0.0018914922901582777,higher risk
+cur_iadl_laundry_hhelp,Someone else does laundry because of health,0.0018752986257556086,higher risk
+cur_self_rated_health,Self-rated health (1 excellent - 5 poor),0.0017719854745957063,higher risk
+cur_iadl_meds_hhelp,Someone else does meds because of health,0.0017041357355664062,higher risk
+cur_go_out_freq,"How often goes outside (0 = every day, 4 = never)",0.0016115289728488,higher risk
+d_chair_time,Seconds for 5 chair stands (change),0.0016087747930255997,lower risk
+d_grip_max,"Grip strength (kg, best trial) (change)",0.0015561575848057707,lower risk
+cur_lower_body_weak,Lower-body strength limits activity,0.0013493830252906047,higher risk
+cur_low_energy,Low energy in last month,0.0012941402728614433,higher risk
+cur_cannot_climb_10stairs,Cannot climb 10 stairs,0.0012395962229995135,higher risk
+cur_network_size,People in social network (0-5),0.0012072792884710748,higher risk
+d_network_size,People in social network (0-5) (change),0.0010827307073797347,higher risk
+cur_n_chronic,Number of chronic conditions (of 9),0.0010112224537460412,higher risk
+d_phq2,"Depressive symptoms (PHQ-2, 0-6) (change)",0.0009831227902033746,lower risk
+cur_iadl_meals_hhelp,Someone else does meals because of health,0.0009829964260316979,higher risk
+cur_hospital_stay,Hospital stay in the last year,0.0009750866937040927,higher risk
+cur_phq2,"Depressive symptoms (PHQ-2, 0-6)",0.0009632455037450212,higher risk
+d_capacity_limits,"Number of 10 physical tasks the person cannot do (walk 6 blocks, climb stairs, ...) (change)",0.0009086283897347318,lower risk
+d_dressing_diff,Difficulty dressing alone (change),0.0008618572107286158,higher risk
+d_go_outside_diff,Difficulty go outside alone (change),0.000857322240520911,lower risk
+cur_toileting_device,Uses a device for toileting,0.0008214581441726028,higher risk
+cur_get_out_of_bed_device,Uses a device for get out of bed,0.0008205106681345223,higher risk
+cur_bathing_device,Uses a device for bathing,0.0008177851274316857,higher risk
+cur_get_around_inside_diff,Difficulty get around inside alone,0.0006997527270757722,higher risk
+new_iadl_shopping_hhelp,Someone else does shopping because of health (change),0.000699501634406919,higher risk
+d_balance_score,Balance stands completed (0-3) (change),0.0005783465198897615,higher risk
+d_go_out_freq,"How often goes outside (0 = every day, 4 = never) (change)",0.0005744240232161868,higher risk
+cur_iadl_meds_diff,Difficulty doing meds by self,0.000562442939577918,higher risk
+cur_fell_last_year,Recent fall (NHATS: fell in the last month),0.0005333333343765304,higher risk
+d_dementia_class,"Dementia classification (0 none, 1 possible, 2 probable) (change)",0.0005309200630993274,higher risk
+d_get_around_inside_diff,Difficulty get around inside alone (change),0.0005188852646780812,lower risk
+cur_breathing_problem,Breathing problems,0.0004746685385081428,higher risk
+d_self_rated_health,Self-rated health (1 excellent - 5 poor) (change),0.0004707816204810229,lower risk
+cur_go_outside_less,Does go outside less often than a year ago,0.0004546088223809215,higher risk
+d_n_chronic,Number of chronic conditions (of 9) (change),0.00041823342507228516,lower risk
+d_get_out_of_bed_diff,Difficulty get out of bed alone (change),0.00039645306480622664,lower risk
+cur_pain_limits,Pain limits activities,0.00039629146308305547,higher risk
+cur_memory_worse,Memory worse than a year ago (self or proxy report),0.0003657140262821043,higher risk
+medicaid,Covered by Medicaid,0.0003614810270587306,higher risk
+cur_poor_vision,Cannot see across the street,0.00035293041833823937,higher risk
+d_perf_unable,Physical tests not completed (0-4) (change),0.00033014580028645354,lower risk
+new_hospital_stay,Hospital stay in the last year (change),0.00031911542589720636,higher risk
+d_bathing_diff,Difficulty bathing alone (change),0.00031817363999645887,lower risk
+new_go_outside_device,Uses a device for go outside (change),0.0003136793171452484,higher risk
+cur_weight_loss_10lb,Lost 10+ lb in last year,0.0003045318269708596,higher risk
+new_breathing_problem,Breathing problems (change),0.000303180150335331,higher risk
+new_iadl_banking_hhelp,Someone else does banking because of health (change),0.00028894558083815457,higher risk
+cur_iadl_meals_diff,Difficulty doing meals by self,0.00028220231748397515,higher risk
+cur_get_out_of_bed_diff,Difficulty get out of bed alone,0.0002745697108457654,higher risk
+new_fell_last_year,Recent fall (NHATS: fell in the last month) (change),0.00027308592899045493,higher risk
+n_new_doing_less,n_new_doing_less,0.0002628396346296822,higher risk
+n_new_devices,n_new_devices,0.00025296308729501517,higher risk
+new_iadl_laundry_hhelp,Someone else does laundry because of health (change),0.0002479493387657312,higher risk
+female,Female,0.0002476504526317125,lower risk
+cur_perf_unable,Physical tests not completed (0-4),0.00024763970820546705,higher risk
+cur_bathing_diff,Difficulty bathing alone,0.0002397664022290422,higher risk
+new_iadl_meds_diff,Difficulty doing meds by self (change),0.0002299641940901944,higher risk
+new_weight_loss_10lb,Lost 10+ lb in last year (change),0.00022826489105005115,higher risk
+cur_iadl_laundry_diff,Difficulty doing laundry by self,0.00022514818412595046,higher risk
+cur_iadl_banking_diff,Difficulty doing banking by self,0.00021496419334233723,higher risk
+new_pain_limits,Pain limits activities (change),0.0002024062696126948,higher risk
+new_balance_problem,Balance or coordination problems (change),0.00018890176449216234,higher risk
+new_dressing_wout,Went without dressing (no help / too hard) (change),0.00018317397664953082,lower risk
+new_low_energy,Low energy in last month (change),0.000182990225457776,higher risk
+cur_memory_poor,Rates memory fair or poor,0.00017866870907840376,higher risk
+new_lower_body_weak,Lower-body strength limits activity (change),0.0001711720858251205,higher risk
+cur_dressing_device,Uses a device for dressing,0.00016654446303210034,higher risk
+new_memory_poor,Rates memory fair or poor (change),0.00016307339312097294,higher risk
+new_go_outside_less,Does go outside less often than a year ago (change),0.00014858170039355544,higher risk
+cur_toileting_diff,Difficulty toileting alone,0.00014377367350193807,higher risk
+new_get_around_inside_device,Uses a device for get around inside (change),0.00014196814874414858,higher risk
+new_iadl_banking_diff,Difficulty doing banking by self (change),0.00013904760219651306,higher risk
+new_poor_vision,Cannot see across the street (change),0.00013842480038690473,higher risk
+new_iadl_meals_diff,Difficulty doing meals by self (change),0.00013238665592660965,higher risk
+new_dressing_device,Uses a device for dressing (change),0.00012341340315387569,higher risk
+cur_iadl_shopping_diff,Difficulty doing shopping by self,0.00012242815718881847,higher risk
+new_toileting_device,Uses a device for toileting (change),0.0001204683744537315,higher risk
+cur_bathing_less,Does bathing less often than a year ago,0.00011972506138358212,higher risk
+new_iadl_meds_hhelp,Someone else does meds because of health (change),0.00011260457439829533,higher risk
+covid_outcome,Outcome measured in 2020-21 (pandemic),0.00011212868896883356,higher risk
+new_cannot_climb_10stairs,Cannot climb 10 stairs (change),0.00010608242996784448,higher risk
+proxy,Interview answered by a proxy,0.00010483102477547816,higher risk
+new_iadl_meals_hhelp,Someone else does meals because of health (change),0.00010372723594168584,higher risk
+new_memory_worse,Memory worse than a year ago (self or proxy report) (change),9.125540959888987e-05,higher risk
+cur_get_around_inside_less,Does get around inside less often than a year ago,8.848677165525531e-05,higher risk
+new_iadl_shopping_diff,Difficulty doing shopping by self (change),8.510705107463886e-05,higher risk
+new_cannot_walk_6blocks,Cannot walk 6 blocks (change),8.362222150097129e-05,higher risk
+new_get_out_of_bed_device,Uses a device for get out of bed (change),7.3899887014261e-05,higher risk
+new_bathing_less,Does bathing less often than a year ago (change),6.676535422641411e-05,higher risk
+new_iadl_laundry_diff,Difficulty doing laundry by self (change),6.26196833384971e-05,higher risk
+covid_change,Change measured across 2020 (pandemic),5.945001658058016e-05,higher risk
+cur_stroke,Ever had a stroke,5.284658429741378e-05,higher risk
+new_bathing_device,Uses a device for bathing (change),5.114611668750165e-05,lower risk
+d_eating_diff,Difficulty eating alone (change),5.0683795714483354e-05,lower risk
+d_toileting_diff,Difficulty toileting alone (change),5.0650462399336944e-05,lower risk
+cur_eating_diff,Difficulty eating alone,4.597414395992338e-05,higher risk
+new_eating_wout,Went without eating (no help / too hard) (change),4.554819258402933e-05,-
+n_new_went_without,n_new_went_without,4.391152838984958e-05,higher risk
+new_get_around_inside_less,Does get around inside less often than a year ago (change),4.252713188145705e-05,higher risk
+cur_dressing_less,Does dressing less often than a year ago,4.043540411185258e-05,higher risk
+new_dressing_less,Does dressing less often than a year ago (change),3.573147474190793e-05,higher risk
+cur_poor_hearing,Cannot hear well on the phone,3.3725236627776076e-05,higher risk
+cur_get_around_inside_wout,Went without get around inside (no help / too hard),2.4357123684788032e-05,higher risk
+new_get_around_inside_wout,Went without get around inside (no help / too hard) (change),1.5088111481716057e-05,higher risk
+new_poor_hearing,Cannot hear well on the phone (change),1.3048904381137812e-05,higher risk
+cur_go_outside_wout,Went without go outside (no help / too hard),9.407228451272876e-06,higher risk
+new_stroke,Ever had a stroke (change),5.747797674356235e-06,higher risk
+cur_bathing_wout,Went without bathing (no help / too hard),1.7000204874241976e-06,higher risk
+new_go_outside_wout,Went without go outside (no help / too hard) (change),1.214249438926983e-06,higher risk
+new_eating_device,Uses a device for eating (change),0.0,-
+new_get_out_of_bed_wout,Went without get out of bed (no help / too hard) (change),0.0,-
+cur_dressing_wout,Went without dressing (no help / too hard),0.0,-
+new_bathing_wout,Went without bathing (no help / too hard) (change),0.0,-
+cur_get_out_of_bed_wout,Went without get out of bed (no help / too hard),0.0,-
+cur_eating_device,Uses a device for eating,0.0,-
+cur_eating_wout,Went without eating (no help / too hard),0.0,-

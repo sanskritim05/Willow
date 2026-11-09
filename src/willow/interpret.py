@@ -145,3 +145,48 @@ def attrition_weights(windows: pd.DataFrame, split_round: int, clip_pct: float =
     wt = obs[fit_rows].mean() / np.clip(p, 1e-3, 1)
     wt = np.minimum(wt, np.percentile(wt[obs == 1], clip_pct))
     return pd.Series(np.where(obs == 1, wt, np.nan), index=w.index, name="ipw")
+
+
+# ------------------------------------------------------------------ explainability (tree models)
+def tree_shap(model, X: pd.DataFrame, max_rows: int = 3000, seed: int = 5600):
+    """SHAP values for a fitted random forest or XGBoost model on (a sample of) X.
+
+    Returns (shap_values array [rows x features] for the positive class, the X sample used).
+    Values are on the model's raw scale (log-odds for XGBoost, probability for random forest);
+    rank and direction are what we report, not the absolute size.
+    """
+    import shap  # pip install shap
+    Xs = X.sample(min(max_rows, len(X)), random_state=seed)
+    sv = shap.TreeExplainer(model).shap_values(Xs)
+    # older shap: one array per class
+    if isinstance(sv, list): 
+        sv = sv[1]
+    sv = np.asarray(sv)
+    # newer shap + sklearn RF: [rows, features, classes]
+    if sv.ndim == 3: 
+        sv = sv[:, :, 1]
+    return sv, Xs
+
+
+def shap_importance(sv: np.ndarray, Xs: pd.DataFrame) -> pd.DataFrame:
+    """Mean |SHAP| per feature, plus whether higher values of the feature push risk up or down."""
+    rows = []
+    for j, f in enumerate(Xs.columns):
+        x, s = Xs[f].values.astype(float), sv[:, j]
+        ok = ~np.isnan(x)
+        corr = np.corrcoef(x[ok], s[ok])[0, 1] if ok.sum() > 2 and np.std(x[ok]) > 0 and np.std(s[ok]) > 0 else np.nan
+        rows.append({"feature": f, "mean_abs_shap": float(np.abs(s).mean()),
+                     "higher_value_means": "higher risk" if corr > 0 else ("lower risk" if corr < 0 else "-")})
+    return pd.DataFrame(rows).sort_values("mean_abs_shap", ascending=False).reset_index(drop=True)
+
+
+def shap_by_change_group(imp: pd.DataFrame) -> pd.DataFrame:
+    """Roll feature-level SHAP up to the human-readable change groups the app shows (CHANGE_GROUPS)."""
+    from .schema import CHANGE_GROUPS
+    owner = {}
+    for g, items in CHANGE_GROUPS.items():
+        for it in items:
+            for pre in ("cur_", "d_", "new_"):
+                owner[f"{pre}{it}"] = g
+    g = imp.assign(group=imp["feature"].map(owner).fillna("Other (age, counts, demographics)"))
+    return g.groupby("group")["mean_abs_shap"].sum().sort_values(ascending=False).reset_index()

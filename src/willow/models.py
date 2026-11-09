@@ -13,7 +13,8 @@ import pandas as pd
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import log_loss, roc_auc_score
-from sklearn.model_selection import StratifiedGroupKFold
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import ParameterSampler, StratifiedGroupKFold
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
@@ -70,6 +71,68 @@ def coefficients(model, columns) -> pd.DataFrame:
     coef = model.named_steps["logisticregression"].coef_[0]
     out = pd.DataFrame({"feature": names, "coef": coef, "odds_ratio_per_sd": np.exp(coef)})
     return out.reindex(out["coef"].abs().sort_values(ascending=False).index).reset_index(drop=True)
+
+
+# ------------------------------------------------------------------ tree models
+RF_GRID = {
+    "max_depth": [6, 10, 14, None],
+    "min_samples_leaf": [20, 50, 100, 200],
+    "max_features": ["sqrt", 0.2, 0.33],
+}
+XGB_GRID = {
+    "n_estimators": [200, 400, 700],
+    "max_depth": [2, 3, 4, 5],
+    "learning_rate": [0.02, 0.05, 0.1],
+    "subsample": [0.7, 0.85, 1.0],
+    "colsample_bytree": [0.5, 0.7, 1.0],
+    "min_child_weight": [1, 5, 20],
+    "reg_lambda": [1.0, 5.0, 10.0],
+}
+
+
+def random_forest(n_estimators: int = 500, n_jobs: int = -1, **params):
+    return RandomForestClassifier(n_estimators=n_estimators, random_state=SEED, n_jobs=n_jobs, **params)
+
+
+def xgboost(n_jobs: int = -1, **params):
+    from xgboost import XGBClassifier  # pip install xgboost
+    params = {"n_estimators": 400, **params}
+    return XGBClassifier(objective="binary:logistic", eval_metric="logloss", tree_method="hist",
+                         random_state=SEED, n_jobs=n_jobs, **params)
+
+
+TREE_MODELS = {"rf": (random_forest, RF_GRID), "xgb": (xgboost, XGB_GRID)}
+
+
+def tune_tree(kind: str, X: pd.DataFrame, y: np.ndarray, folds, n_iter: int = 15, seed: int = SEED):
+    """Random search over the model's grid; each candidate scored by grouped 5-fold CV (AUROC, log loss).
+
+    Returns (table sorted best-first, best params, out-of-fold predictions of the best params),
+    mirroring tune_logistic so the notebook steps are identical.
+    """
+    build, grid = TREE_MODELS[kind]
+    rows, oof = [], {}
+    for i, params in enumerate(ParameterSampler(grid, n_iter=n_iter, random_state=seed)):
+        p = np.zeros(len(y))
+        for tr, va in folds:
+            p[va] = build(**params).fit(X.iloc[tr], y[tr]).predict_proba(X.iloc[va])[:, 1]
+        oof[i] = p
+        rows.append({"candidate": i, **params, "cv_auroc": roc_auc_score(y, p), "cv_log_loss": log_loss(y, p)})
+    table = pd.DataFrame(rows).sort_values("cv_auroc", ascending=False).reset_index(drop=True)
+    best_i = int(table.loc[0, "candidate"])
+    best = {k: v for k, v in table.loc[0].items() if k in grid}
+    best = {k: (None if isinstance(v, float) and np.isnan(v) else v) for k, v in best.items()}
+    for k in ("max_depth", "min_samples_leaf", "n_estimators", "min_child_weight"):  # pandas makes these floats
+        if k in best and best[k] is not None and float(best[k]).is_integer():
+            best[k] = int(best[k])
+    return table, best, oof[best_i]
+
+
+def feature_importance(model, columns) -> pd.DataFrame:
+    """Built-in (impurity / gain) importance. Quick look only; SHAP in interpret.py is what we report."""
+    imp = model.feature_importances_
+    out = pd.DataFrame({"feature": list(columns), "importance": imp})
+    return out.sort_values("importance", ascending=False).reset_index(drop=True)
 
 
 # ------------------------------------------------------------------ calibration
