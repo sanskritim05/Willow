@@ -20,6 +20,12 @@ def alert_threshold(p_train: np.ndarray, flag_share: float = 0.2) -> float:
     return float(np.quantile(p_train, 1 - flag_share))
 
 
+def observed_expected(y, p, weights=None) -> float:
+    """Observed / expected events; with survey weights, it compares against the US population, not the sample."""
+    w = np.ones(len(y)) if weights is None else np.asarray(weights)
+    return float((w * np.asarray(y)).sum() / (w * np.asarray(p)).sum())
+
+
 def core_metrics(y: np.ndarray, p: np.ndarray, threshold: float) -> dict:
     y, p = np.asarray(y), np.asarray(p)
     logit = np.log(np.clip(p, 1e-6, 1 - 1e-6) / (1 - np.clip(p, 1e-6, 1 - 1e-6)))

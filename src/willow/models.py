@@ -46,19 +46,20 @@ def grouped_folds(train: pd.DataFrame, y_col: str, k: int = 5, seed: int = SEED)
 
 
 # ------------------------------------------------------------------ logistic regression
-def logistic(C: float):
-    """Median imputation + missing indicators, standardised inputs, L2-penalised logistic regression."""
-    return make_pipeline(SimpleImputer(strategy="median", add_indicator=True), StandardScaler(),
+def logistic(C: float, missing_flags: bool = True):
+    """Median imputation (+ missing indicators), standardised inputs, L2-penalised logistic regression."""
+    return make_pipeline(SimpleImputer(strategy="median", add_indicator=missing_flags), StandardScaler(),
                          LogisticRegression(C=C, max_iter=2000))
 
 
-def tune_logistic(X: pd.DataFrame, y: np.ndarray, folds, grid=(1e-4, 3e-4, 1e-3, 3e-3, 0.01, 0.1, 1.0)):
+def tune_logistic(X: pd.DataFrame, y: np.ndarray, folds, grid=(1e-4, 3e-4, 1e-3, 3e-3, 0.01, 0.1, 1.0),
+                  missing_flags: bool = True):
     """Cross-validated AUROC and log loss for each penalty C; returns (table, best C, out-of-fold predictions)."""
     rows, oof = [], {}
     for C in grid:
         p = np.zeros(len(y))
         for tr, va in folds:
-            p[va] = logistic(C).fit(X.iloc[tr], y[tr]).predict_proba(X.iloc[va])[:, 1]
+            p[va] = logistic(C, missing_flags).fit(X.iloc[tr], y[tr]).predict_proba(X.iloc[va])[:, 1]
         oof[C] = p
         rows.append({"C": C, "cv_auroc": roc_auc_score(y, p), "cv_log_loss": log_loss(y, p)})
     table = pd.DataFrame(rows)
@@ -66,14 +67,21 @@ def tune_logistic(X: pd.DataFrame, y: np.ndarray, folds, grid=(1e-4, 3e-4, 1e-3,
     return table, best, oof[best]
 
 
-def fit_logistic_model(train: pd.DataFrame, test: pd.DataFrame, feature_set: str, outcome: str = "y_any") -> dict:
+def fit_logistic_model(train: pd.DataFrame, test: pd.DataFrame, feature_set: str, outcome: str = "y_any",
+                       drop=(), missing_flags: bool = True, weight_col: str | None = None) -> dict:
     """The whole recipe for one feature set: tune C on grouped CV, fit on all training data, Platt-recalibrate
-    on the out-of-fold predictions, predict the test set once. Same seed -> same folds for every feature set."""
-    X, y = make_X(train, feature_set), train[outcome].values
-    cv, C, oof = tune_logistic(X, y, grouped_folds(train, outcome))
-    model = logistic(C).fit(X, y)
-    platt = platt_fit(oof, y)
-    p_test = platt_apply(platt, model.predict_proba(make_X(test, feature_set))[:, 1])
+    on the out-of-fold predictions, predict the test set once. Same seed -> same folds for every feature set.
+
+    drop          columns to leave out of the feature set (sensitivity checks)
+    missing_flags add a "was missing" indicator for each input with gaps
+    weight_col    survey weight for the Platt step, so risks match the US population rather than the sample
+                  (NHATS oversamples the oldest ages); ranking, and so AUROC, is unchanged
+    """
+    X, y = make_X(train, feature_set).drop(columns=list(drop)), train[outcome].values
+    cv, C, oof = tune_logistic(X, y, grouped_folds(train, outcome), missing_flags=missing_flags)
+    model = logistic(C, missing_flags).fit(X, y)
+    platt = platt_fit(oof, y, None if weight_col is None else train[weight_col].values)
+    p_test = platt_apply(platt, model.predict_proba(make_X(test, feature_set).drop(columns=list(drop)))[:, 1])
     return {"feature_set": feature_set, "n_features": X.shape[1], "columns": list(X.columns), "cv": cv, "C": C,
             "model": model, "p_train": platt_apply(platt, oof), "p_test": p_test}
 
@@ -155,9 +163,9 @@ def _logit(p):
     return np.log(p / (1 - p))
 
 
-def platt_fit(p: np.ndarray, y: np.ndarray) -> LogisticRegression:
-    """Platt scaling: a 1-feature logistic regression on the logit of the raw predictions."""
-    return LogisticRegression(C=1e6).fit(_logit(p).reshape(-1, 1), y)
+def platt_fit(p: np.ndarray, y: np.ndarray, sample_weight: np.ndarray | None = None) -> LogisticRegression:
+    """Platt scaling: a 1-feature logistic regression on the logit of the raw predictions (optionally weighted)."""
+    return LogisticRegression(C=1e6).fit(_logit(p).reshape(-1, 1), y, sample_weight=sample_weight)
 
 
 def platt_apply(platt: LogisticRegression, p: np.ndarray) -> np.ndarray:

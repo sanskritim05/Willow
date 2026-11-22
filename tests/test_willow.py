@@ -88,6 +88,18 @@ def test_paired_difference_and_feature_sets(windows):
     assert feature_label("d_bathing_diff").startswith("Change since last year")
 
 
+def test_logistic_options_drop_flags_weights(windows):
+    from willow import metrics as mt, models as md
+    tr, te = md.person_time_split(analytic_windows(windows), 10)
+    no_age = md.fit_logistic_model(tr, te, "status", drop=["age"], missing_flags=False)
+    assert "age" not in no_age["columns"]
+    assert not md.coefficients(no_age["model"], no_age["columns"]).feature.str.endswith("(missing)").any()
+    wt = md.fit_logistic_model(tr, te, "status", weight_col="weight")
+    assert ((wt["p_test"] > 0) & (wt["p_test"] < 1)).all()
+    assert np.isclose(mt.observed_expected([1, 0], [0.5, 0.5]), 1.0)
+    assert np.isclose(mt.observed_expected([1, 0], [0.5, 0.5], [3, 1]), 1.5)
+
+
 def test_alert_threshold_flags_top_share():
     from willow.metrics import alert_threshold
     p = np.linspace(0, 1, 101)
